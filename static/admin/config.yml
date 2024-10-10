@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: Discovery-Data-Lab/blog # Your GitHub repository
   branch: main # Branch to push changes
   base_url: https://ddlgateway.netlify.app/
@@ -24,52 +24,3 @@ collections:
       - { label: "Banner Image", name: "banner", widget: "image" }
       - { label: "Authors", name: "authors", widget: "list", default: [] }
       - { label: "Body", name: "body", widget: "markdown" }
-
-  - name: "members"
-    label: "Members"
-    folder: "data/testimonials"
-    create: false
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Position", name: "position", widget: "string" }
-      - { label: "Avatar Image", name: "avatar", widget: "image" }
-      - { label: "LinkdIn Link:", name: "linkedin_link", widget: "string" }
-      - { label: "Github Link:", name: "github_link", widget: "string" }
-      - {
-          label: "Personal Site Link:",
-          name: "personalSite_link",
-          widget: "string",
-        }
-      - { label: "E-mail:", name: "email", widget: "string" }
-      - { label: "About You", name: "text", widget: "markdown" }
-
-  - name: "carousel"
-    label: "Carousel"
-    folder: "data/carousel"
-    create: false
-    slug: "{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Weight", name: "weight", widget: "number" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Link", name: "href", widget: "string" }
-
-  - name: "features"
-    label: "Features"
-    folder: "data/features"
-    create: false
-    slug: "{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Weight", name: "weight", widget: "number" }
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Icon", name: "icon", widget: "string" }
-      - { label: "URL", name: "url", widget: "string" }
-      - { label: "Description", name: "description", widget: "markdown" }
