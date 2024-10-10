@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: github
   repo: Discovery-Data-Lab/blog # Your GitHub repository
   branch: main # Branch to push changes
   base_url: https://ddlgateway.netlify.app/
