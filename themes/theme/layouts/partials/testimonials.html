@@ -1,0 +1,136 @@
+{{ if isset .Site.Params "testimonials" }}
+    {{ if .Site.Params.testimonials.enable }}
+        {{ if isset .Site.Data "testimonials" }}
+            {{ if gt (len .Site.Data.testimonials) 0 }}
+                <section class="bar background-pentagon no-mb">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="heading text-center">
+                                    <h2>{{ .Site.Params.testimonials.title }}</h2>
+                                </div>
+
+                                <p class="lead">
+                                    {{ .Site.Params.testimonials.subtitle | markdownify }}
+                                </p>
+
+                                <!-- *** TESTIMONIALS CAROUSEL *** -->
+
+                                <div class="testimonials-wrapper">
+                                    <ul class="owl-carousel testimonials same-height-row"
+                                        data-items="{{ default 4 .Site.Params.CarouselTestimonials.items }}"
+                                        data-autoplay="{{ default false .Site.Params.CarouselTestimonials.auto_play }}"
+                                        data-slide-speed="{{ default 2000 .Site.Params.CarouselTestimonials.slide_speed }}"
+                                        data-pagination-speed="{{ default 1000 .Site.Params.CarouselTestimonials.pagination_speed }}">
+                                        {{ range .Site.Data.testimonials }}
+                                            <li class="item">
+                                                <!-- Social Links Section -->
+                                                <div class="social-links">
+                                                    {{ if .linkedin_link }}
+                                                        <a href="{{ .linkedin_link }}" target="_blank" class="social-link" aria-label="LinkedIn">
+                                                            <i class="fab fa-linkedin"></i>
+                                                        </a>
+                                                    {{ end }}
+                                                    
+                                                    {{ if .github_link }}
+                                                        <a href="{{ .github_link }}" target="_blank" class="social-link" aria-label="GitHub">
+                                                            <i class="fab fa-github"></i>
+                                                        </a>
+                                                    {{ end }}
+                                                    
+                                                    {{ if .email }}
+                                                        <a href="mailto:{{ .email }}" class="social-link" aria-label="Email">
+                                                            <i class="fas fa-envelope"></i>
+                                                        </a>
+                                                    {{ end }}
+                                                    
+                                                    {{ if .personalSite_link }}
+                                                        <a href="{{ .personalSite_link }}" target="_blank" class="social-link" aria-label="Website">
+                                                            <i class="fas fa-globe"></i>
+                                                        </a>
+                                                    {{ end }}
+                                                </div>
+                                                <div class="testimonial same-height-always">
+                                                    <div class="text">
+                                                        <p>{{ .text | markdownify }}</p>
+                                                    </div>
+                                                    <div class="bottom">
+                                                        <div class="icon"><i class="fas fa-quote-left"></i></div>
+                                                        <div class="name-picture">
+                                                            <img class="" alt="Avatar of {{ .name }}" src="{{ .avatar | absURL }}">
+                                                            <h5>{{ .name }}</h5>
+                                                            <p>{{ .position }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {{ end }}
+                                    </ul>
+                                    <!-- /.owl-carousel -->
+                                </div>
+                                <!-- /.testimonials-wrapper -->
+
+                                <!-- *** TESTIMONIALS CAROUSEL END *** -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- /.bar -->
+
+                <style>
+                    .testimonials-wrapper {
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .testimonial {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        height: 100%;
+                        text-decoration: none;
+                        color: inherit;
+                    }
+
+                    .testimonial .text {
+                        flex-grow: 1;
+                    }
+
+                    .bottom {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 10px;
+                    }
+
+                    .social-links {
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 10px;
+                        gap: 10px;
+                        /* Align to the bottom */
+                    }
+
+                    .social-link {
+                        color: #0077b5; /* Adjust for each platform if needed */
+                        text-decoration: none;
+                        font-size: 1.2em;
+                        display: inline-block;
+                    }
+
+                    .social-link i {
+                        margin-right: 5px;
+                    }
+
+                    .social-link:hover {
+                        color: #005b9a; /* Darker color on hover */
+                    }
+
+                    .fab, .fas {
+                        margin-right: 5px;
+                    }
+                </style>
+
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}

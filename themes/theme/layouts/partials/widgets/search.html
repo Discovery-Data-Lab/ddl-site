@@ -1,0 +1,57 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
+
+{{ if isset .Site.Params.widgets "search" }}
+{{ if .Site.Params.widgets.search }}
+<div class="panel panel-default sidebar-menu">
+
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ i18n "searchTitle" }}</h3>
+  </div>
+
+  <div class="panel-body">
+    <input type="search" id="search-input" class="form-control" placeholder="{{ i18n "searchTitle" }}">
+    <ul id="search-results"></ul>
+  </div>
+
+</div>
+{{ end }}
+{{ end }}
+
+<script>
+    // Fetch the search index (index.json)
+    fetch("/index.json")
+      .then(response => response.json())
+      .then(data => {
+        // Build Lunr.js search index
+        var idx = lunr(function () {
+          this.ref('url')
+          this.field('title', { boost: 10 })
+          this.field('content')
+  
+          data.pages.forEach(function (page) {
+            this.add(page)
+          }, this)
+        })
+  
+        // Search input event listener
+        document.getElementById('search-input').addEventListener('input', function () {
+          var query = this.value
+          var results = idx.search(query)
+  
+          var resultsList = document.getElementById('search-results')
+          resultsList.innerHTML = ''
+  
+          if (results.length > 0) {
+            results.forEach(function (result) {
+              var page = data.pages.find(p => p.url === result.ref)
+              var li = document.createElement('li')
+              li.innerHTML = `<a href="${page.url}">${page.title}</a>`
+              resultsList.appendChild(li)
+            })
+          } else {
+            resultsList.innerHTML = '<li>No results found</li>'
+          }
+        })
+      })
+  </script>
+  
