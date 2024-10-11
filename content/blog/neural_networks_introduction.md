@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Neural Networks in C: Building from Scratch"
+title: "Introdução a Redes Neurais em C: Construindo do ZERO!"
 date: 2024-10-10T12:04:00.000Z
 tags:
   - inteligência artificial
@@ -13,52 +13,53 @@ banner: img/banners/ann-banner.png
 authors:
   - Guilherme Oliveira
 ---
-Neural Networks (NN) have gained popularity due to their ability to model complex problems in areas like image recognition, natural language processing, and autonomous systems. Understanding how neural networks work internally can be beneficial, especially for those in computer science and cybersecurity, where you may need to work with efficient, low-level implementations of AI systems.
 
-In this post, we'll introduce you to building a basic neural network from scratch using the C programming language. C is ideal for this because it allows us to manage memory and computation efficiently. This guide assumes you're familiar with basic C programming concepts such as arrays, loops, and functions.
+**Redes Neurais (NN)** têm ganhado popularidade devido à sua capacidade de modelar problemas complexos em áreas como reconhecimento de imagens, processamento de linguagem natural e sistemas autônomos. Compreender como as redes neurais funcionam internamente pode ser benéfico, especialmente para aqueles na ciência da computação e segurança cibernética, onde você pode precisar trabalhar com implementações eficientes e de baixo nível de sistemas de IA.
 
-### 1. **What is a Neural Network?**
+Neste post, apresentaremos como construir uma rede neural básica do zero usando a linguagem de programação C. O C é ideal para isso porque permite gerenciar memória e computação de forma eficiente. Este guia assume que você está familiarizado com conceitos básicos de programação em C, como arrays, loops e funções.
 
-A neural network is composed of neurons, inspired by biological neurons, arranged in layers:
+### 1. **O que é uma Rede Neural?**
 
-* **Input Layer**: Accepts inputs (e.g., image pixels).
-* **Hidden Layers**: Process input data through weighted connections.
-* **Output Layer**: Produces the final output (e.g., classifying an image).
+Uma rede neural é composta de neurônios, inspirados pelos neurônios biológicos, organizados em camadas:
 
-Each neuron has a value, calculated using the weighted sum of its inputs followed by a non-linear function (called an activation function). The network adjusts these weights during training to minimize errors using a process called backpropagation.
+* **Camada de Entrada**: Aceita entradas (por exemplo, pixels de uma imagem).
+* **Camadas Ocultas**: Processam os dados de entrada por meio de conexões ponderadas.
+* **Camada de Saída**: Produz a saída final (por exemplo, classificação de uma imagem).
 
-### 2. **Key Concepts**
+Cada neurônio tem um valor, calculado usando a soma ponderada de suas entradas seguida de uma função não-linear (chamada função de ativação). A rede ajusta esses pesos durante o treinamento para minimizar erros por meio de um processo chamado backpropagation (retropropagação).
 
-Before diving into the implementation, it’s important to clarify a few key terms:
+### 2. **Conceitos-chave**
 
-* **Weights**: Values that adjust the strength of connections between neurons.
-* **Bias**: An extra value added to the weighted sum of inputs to allow the model to fit data better.
-* **Activation Function**: Non-linear function applied to the neuron output, enabling the network to solve complex problems. Common functions include Sigmoid, ReLU (Rectified Linear Unit), and Tanh.
-* **Forward Propagation**: Process of calculating the outputs of neurons layer by layer from input to output.
-* **Backpropagation**: The training algorithm used to minimize errors by adjusting weights and biases using gradient descent.
+Antes de mergulhar na implementação, é importante esclarecer alguns termos-chave:
 
-### 3. **Setting Up the Structure**
+* **Pesos**: Valores que ajustam a força das conexões entre neurônios.
+* **Bias (Viés)**: Um valor extra adicionado à soma ponderada das entradas para permitir que o modelo se ajuste melhor aos dados.
+* **Função de Ativação**: Função não-linear aplicada à saída do neurônio, permitindo que a rede resolva problemas complexos. Funções comuns incluem Sigmoid, ReLU (Unidade Linear Retificada) e Tanh.
+* **Propagação Direta**: Processo de calcular as saídas dos neurônios camada por camada, da entrada à saída.
+* **Backpropagation**: O algoritmo de treinamento usado para minimizar erros ajustando pesos e vieses utilizando descida do gradiente.
 
-In C, we can represent the neural network using arrays and structures. Let's first define a basic structure for a neural network layer.
+### 3. **Configurando a Estrutura**
 
-#### Define the Neuron and Layer Structures:
+Em C, podemos representar a rede neural usando arrays e estruturas. Primeiro, vamos definir uma estrutura básica para uma camada de rede neural.
+
+#### Definir as Estruturas do Neurônio e da Camada:
 
 ```c
 typedef struct {
     int num_inputs;
-    float *weights;   // Array to store weights
-    float bias;       // Bias value for the neuron
+    float *weights;   // Array para armazenar os pesos
+    float bias;       // Valor de viés para o neurônio
 } Neuron;
 
 typedef struct {
     int num_neurons;
-    Neuron *neurons;  // Array of neurons
+    Neuron *neurons;  // Array de neurônios
 } Layer;
 ```
 
-Here, each neuron stores its own weights and bias. Each layer has a number of neurons.
+Aqui, cada neurônio armazena seus próprios pesos e viés. Cada camada tem um número de neurônios.
 
-#### Initialize the Neurons and Layers:
+#### Inicializar os Neurônios e Camadas:
 
 ```c
 Neuron create_neuron(int num_inputs) {
@@ -66,9 +67,9 @@ Neuron create_neuron(int num_inputs) {
     neuron.num_inputs = num_inputs;
     neuron.weights = (float *)malloc(sizeof(float) * num_inputs);
 
-    // Initialize weights and bias with random values
+    // Inicializa os pesos e o viés com valores aleatórios
     for (int i = 0; i < num_inputs; i++) {
-        neuron.weights[i] = ((float) rand()) / RAND_MAX;  // Random float [0,1]
+        neuron.weights[i] = ((float) rand()) / RAND_MAX;  // Float aleatório [0,1]
     }
     neuron.bias = ((float) rand()) / RAND_MAX;
     return neuron;
@@ -86,13 +87,13 @@ Layer create_layer(int num_neurons, int num_inputs) {
 }
 ```
 
-This code sets up a basic layer with random weights and biases. Every neuron in the layer will have a weight associated with each input.
+Esse código configura uma camada básica com pesos e vieses aleatórios. Cada neurônio na camada terá um peso associado a cada entrada.
 
-### 4. **Forward Propagation**
+### 4. **Propagação Direta**
 
-The next step is to implement the forward propagation, where we calculate the output of each neuron in the layer by applying the weights to the inputs and passing the result through an activation function (e.g., Sigmoid).
+O próximo passo é implementar a propagação direta, onde calculamos a saída de cada neurônio na camada aplicando os pesos às entradas e passando o resultado por uma função de ativação (por exemplo, Sigmoid).
 
-#### Activation Function (Sigmoid):
+#### Função de Ativação (Sigmoid):
 
 ```c
 float sigmoid(float x) {
@@ -100,7 +101,7 @@ float sigmoid(float x) {
 }
 ```
 
-#### Compute Output for a Neuron:
+#### Calcular a Saída de um Neurônio:
 
 ```c
 float compute_neuron_output(Neuron neuron, float *inputs) {
@@ -109,11 +110,11 @@ float compute_neuron_output(Neuron neuron, float *inputs) {
         output += neuron.weights[i] * inputs[i];
     }
     output += neuron.bias;
-    return sigmoid(output);  // Apply activation function
+    return sigmoid(output);  // Aplica a função de ativação
 }
 ```
 
-#### Forward Propagation for a Layer:
+#### Propagação Direta para uma Camada:
 
 ```c
 void forward(Layer layer, float *inputs, float *outputs) {
@@ -123,52 +124,52 @@ void forward(Layer layer, float *inputs, float *outputs) {
 }
 ```
 
-This performs forward propagation through a layer, computing the output for each neuron based on the inputs.
+Isso realiza a propagação direta através de uma camada, calculando a saída para cada neurônio com base nas entradas.
 
-### 5. **Creating the Neural Network**
+### 5. **Criando a Rede Neural**
 
-We can define a network as an array of layers. For simplicity, we'll assume our network has one hidden layer and one output layer.
+Podemos definir uma rede como um array de camadas. Para simplificar, vamos assumir que nossa rede tem uma camada oculta e uma camada de saída.
 
 ```c
 typedef struct {
     int num_layers;
-    Layer *layers;  // Array of layers
+    Layer *layers;  // Array de camadas
 } NeuralNetwork;
 
 NeuralNetwork create_network(int num_inputs, int num_hidden_neurons, int num_output_neurons) {
     NeuralNetwork network;
-    network.num_layers = 2;  // One hidden layer, one output layer
+    network.num_layers = 2;  // Uma camada oculta e uma camada de saída
     network.layers = (Layer *)malloc(sizeof(Layer) * network.num_layers);
 
-    network.layers[0] = create_layer(num_hidden_neurons, num_inputs);     // Hidden layer
-    network.layers[1] = create_layer(num_output_neurons, num_hidden_neurons);  // Output layer
+    network.layers[0] = create_layer(num_hidden_neurons, num_inputs);     // Camada oculta
+    network.layers[1] = create_layer(num_output_neurons, num_hidden_neurons);  // Camada de saída
 
     return network;
 }
 
 void forward_network(NeuralNetwork network, float *inputs, float *outputs) {
     float *hidden_outputs = (float *)malloc(sizeof(float) * network.layers[0].num_neurons);
-    forward(network.layers[0], inputs, hidden_outputs);  // Forward pass through hidden layer
+    forward(network.layers[0], inputs, hidden_outputs);  // Passa pela camada oculta
 
-    forward(network.layers[1], hidden_outputs, outputs);  // Forward pass through output layer
+    forward(network.layers[1], hidden_outputs, outputs);  // Passa pela camada de saída
     free(hidden_outputs);
 }
 ```
 
-This code defines the structure of the neural network and how to propagate inputs through it. You can create a network with a specified number of hidden and output neurons and use `forward_network` to process an input.
+Esse código define a estrutura da rede neural e como propagar as entradas através dela. Você pode criar uma rede com um número específico de neurônios ocultos e de saída e usar `forward_network` para processar uma entrada.
 
-### 6. **Training the Network: Backpropagation (Overview)**
+### 6. **Treinando a Rede: Backpropagation (Visão Geral)**
 
-Backpropagation is used to adjust the weights and biases based on the error in the output. In this simple introduction, we won’t implement backpropagation, but the idea is to:
+Backpropagation é usado para ajustar os pesos e vieses com base no erro da saída. Nesta introdução simples, não implementaremos o backpropagation, mas a ideia é:
 
-1. **Compute the error** between the predicted output and the actual output.
-2. **Calculate the gradient** of the loss function with respect to each weight and bias.
-3. **Update weights** using gradient descent.
+1. **Calcular o erro** entre a saída prevista e a saída real.
+2. **Calcular o gradiente** da função de perda em relação a cada peso e viés.
+3. **Atualizar os pesos** usando a descida do gradiente.
 
-Training involves repeatedly feeding inputs through the network, computing the error, and updating the weights until the network can accurately predict outputs.
+O treinamento envolve alimentar repetidamente entradas na rede, calcular o erro e ajustar os pesos até que a rede possa prever saídas com precisão.
 
-### Conclusion
+### Conclusão
 
-In this post, we've covered the basics of building a neural network from scratch in C, focusing on setting up the structure and forward propagation. This fundamental understanding of neural networks in C will give you insight into how machine learning models work behind the scenes and prepare you to explore more advanced concepts like backpropagation and optimization.
+Neste post, abordamos os fundamentos de como construir uma rede neural do zero em C, focando na configuração da estrutura e na propagação direta. Essa compreensão fundamental de redes neurais em C fornecerá uma visão de como os modelos de aprendizado de máquina funcionam nos bastidores e preparará você para explorar conceitos mais avançados, como backpropagation e otimização.
 
-Further improvements could include implementing different activation functions, adding more layers, or experimenting with backpropagation for training the network.
+Melhorias futuras podem incluir a implementação de diferentes funções de ativação, adicionar mais camadas ou experimentar o backpropagation para treinar a rede.

@@ -35,14 +35,14 @@ url = "/blog/"
 weight = 2
 
 [[menu.main]]
-name = "FAQ"
+name = "Perguntas Frequentes"
 identifier = "menu.faq"
 url = "/faq/"
 weight = 3
 
 [[menu.main]]
 identifier = "Contato"
-name = "Contact"
+name = "Contato"
 url = "/contact/"
 weight = 4
 
@@ -51,12 +51,6 @@ name = "GitHub"
 identifier = "menu.about"
 url = "https://github.com/Discovery-Data-Lab"
 weight = 5
-
-[[menu.main]]
-name = "Private Area"
-identifier = "menu.private"
-url = "https://ddlgateway.netlify.app/admin"
-weight = 6
 
 [params]
 viewMorePostLink = "/blog/"
@@ -122,7 +116,7 @@ enableRecaptchaInContactForm = false
 googleRecaptchaKey = "site_key_for_google_recaptcha"
 
 about_us = "<p>Estamos comprometidos em avançar no conhecimento científico e tecnológico, aplicando métodos para gerar soluções práticas que beneficiem a sociedade. Acreditamos que, por meio da pesquisa interdisciplinar e da colaboração, podemos contribuir significativamente para o progresso dessas áreas e formar profissionais altamente capacitados.</p>"
-copyright = "<strong>Copyright (c) 2024 - Guilherme Oliveira - Discovery Data Lab - Todos os direitos reservados.</strong>"
+copyright = "<strong>Copyright (c) 2024 - Guilherme Oliveira & Discovery Data Lab - Todos os direitos reservados.</strong>"
 
 # Format dates with Go's time formatting
 date_format = "January 2, 2006"
@@ -193,7 +187,7 @@ link_text = "Clique aqui"
 [params.recent_posts]
 enable = true
 title = "Leia nossos trabalhos!"
-subtitle = "“Research shows that you begin learning in the womb and go right on learning until the moment you pass on. Your brain has a capacity for learning that is virtually limitless, which makes every human a potential genius.” — Michael J. Gelb"
+subtitle = "“Pesquisas mostram que você começa a aprender no útero e continua aprendendo até o momento em que morre. Seu cérebro tem uma capacidade de aprendizado que é virtualmente ilimitada, o que torna todo ser humano um gênio em potencial.” — Michael J. Gelb"
 hide_summary = false
 
 [params.testimonials]
