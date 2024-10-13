@@ -8,6 +8,18 @@ media_folder: "static/img" # Folder to store uploaded media files
 public_folder: "/img" # Path to access media in the public folder
 
 collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "content"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "blog"
     label: "Blog"
     folder: "content/blog"
@@ -26,7 +38,7 @@ collections:
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "testimonials"
-    label: "Testimonials"
+    label: "Members"
     folder: "data/testimonials"
     create: true
     slug: "{{slug}}"
@@ -45,3 +57,31 @@ collections:
           name: "personalSite_link",
           widget: "string",
         }
+
+  - name: "carousel"
+    label: "Carousel"
+    folder: "data/carousel"
+    create: true
+    slug: "{{slug}}"
+    extension: "yaml"
+    format: "yaml"
+    fields:
+      - { label: "Weight", name: "weight", widget: "number" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Link", name: "href", widget: "string" }
+
+  - name: "features" # Name of the collection
+    label: "Features" # Label in the CMS
+    folder: "data/features" # Folder where YAML files will be stored
+    create: true
+    slug: "{{slug}}" # Entry slug generation based on name
+    extension: "yaml" # Set file extension to .yaml
+    format: "yaml" # Use YAML as the file format
+    fields:
+      - { label: "Weight", name: "weight", widget: "number" }
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Icon", name: "icon", widget: "string" }
+      - { label: "URL", name: "url", widget: "string", default: "" }
+      - { label: "Description", name: "description", widget: "text" }
