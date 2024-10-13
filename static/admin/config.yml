@@ -25,11 +25,13 @@ collections:
       - { label: "Authors", name: "authors", widget: "list", default: [] }
       - { label: "Body", name: "body", widget: "markdown" }
 
-  - name: "testimonials" # Name of the collection
-    label: "Testimonials" # Label in the CMS
-    folder: "data/testimonials" # Folder where entries are stored
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "data/testimonials"
     create: true
-    slug: "{{slug}}" # Entry slug generation based on name
+    slug: "{{slug}}"
+    extension: "yaml"
+    format: "yaml"
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Position", name: "position", widget: "string" }
