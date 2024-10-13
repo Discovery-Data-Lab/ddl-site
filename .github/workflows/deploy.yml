@@ -30,4 +30,4 @@ jobs:
 
     - name: Deploy via Rclone
       run: |
-        rclone sync --interactive ./public_html ftp:/public_html
+        rclone sync ./public_html ftp:/public_html --delete-during --verbose --auto-confirm
