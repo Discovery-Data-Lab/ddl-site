@@ -1,5 +1,5 @@
 ---
-title: Why python is the easiest language for beginners ?
+title: Por que python é a linguagem mais fácil para iniciantes ?
 date: 2024-10-03T10:45:00+02:00
 tags:
   - python
@@ -15,9 +15,9 @@ authors:
   - Guilherme Oliveira
 ---
 
-## Por que Python é a Linguagem de Programação Perfeita para Iniciantes
-
 Se você está começando no mundo da programação, provavelmente já ouviu falar do Python. Mas por que o Python é considerado uma das melhores linguagens para iniciantes? Vamos entender o porquê!
+
+<!--more-->
 
 ![Logo do Python](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT45JBHn9zc9RxS56kOquzrelUMXJa0mZBhCQ&s)
 

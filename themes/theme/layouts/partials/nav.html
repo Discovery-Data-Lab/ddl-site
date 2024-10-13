@@ -1,3 +1,28 @@
+<link href="https://fonts.googleapis.com/css2?family=Mont:wght@700&display=swap" rel="stylesheet">
+
+<style>
+.image-text-container {
+  display: flex;
+  align-items: center; /* Vertically align image and text */
+}
+
+.text-next-to-image {
+  margin-left: 20px; /* Adjust the space between the image and text */
+  font-size: 18px; /* Adjust size as needed */
+  font-family: 'Mont', sans-serif; /* Use Mont font */
+  font-weight: bold; /* Make the font bold */
+  color: #3f9aac; /* Set text color */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Animation properties */
+}
+
+.text-next-to-image:hover {
+  transform: scale(1.2); /* Scale up slightly */
+  opacity: 0.9; /* Slightly change opacity */
+}
+
+
+</style>
+
 <header class="navbar-affixed-top" data-spy="affix" data-offset-top="62">
     <div class="navbar navbar-default yamm {{ if .Site.Params.dropdown_mouse_over }}mouseover{{ end }}" role="navigation" id="navbar">
         <div class="container">
@@ -6,7 +31,10 @@
                     {{ if default false .Site.Params.disabled_logo }}
                       <h4>{{ .Site.Params.logo_text }}</h4>
                     {{ else }}
-                      <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Title }} logo" class="hidden-xs hidden-sm" />
+                    <div class="image-text-container hidden-xs hidden-sm">
+                      <img src="{{ .Site.Params.logo_small | relURL }}" alt="{{ .Title }} logo" class="hidden-xs hidden-sm" />
+                      <span class="text-next-to-image">DISCOVERY DATA LAB</span>
+                    </div>
                       <img src="{{ .Site.Params.logo_small | relURL }}" alt="{{ .Title }} logo" class="visible-xs visible-sm" />
                     {{ end }}
                     <span class="sr-only">{{ .Title }} - {{ i18n "navHome" }}</span>
