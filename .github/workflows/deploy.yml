@@ -3,7 +3,7 @@ name: Deploy Hugo Site to FTP Server
 on:
   push:
     branches:
-      - main  # Specify the branch to trigger the workflow
+      - main 
 
 jobs:
   deploy:
@@ -16,22 +16,18 @@ jobs:
     - name: Set up Hugo
       uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: '0.111.3'  # Use the specific Hugo version
+        hugo-version: '0.111.3' 
 
     - name: Build Hugo site
       run: hugo
 
-    - name: Install lftp
-      run: sudo apt-get install -y lftp  # Install lftp before using it
+    - name: Install Rclone
+      run: sudo apt-get install -y rclone
 
-    - name: Deploy via FTP
-      env:
-        FTP_SERVER: ${{ secrets.FTP_SERVER }}
-        FTP_USER: ${{ secrets.FTP_USER }}
-        FTP_PASSW: ${{ secrets.FTP_PASSW }}
+    - name: Configure Rclone
       run: |
-        lftp -u "$FTP_USER","$FTP_PASSW" "$FTP_SERVER" <<EOF
-        set ssl:verify-certificate no
-        mirror --reverse --delete --verbose --only-newer ./public_html/ /public_html/
-        bye
-        EOF
+        rclone config create ftp ftp host "${{ secrets.FTP_SERVER }}" user "${{ secrets.FTP_USER }}" pass "${{ secrets.FTP_PASSW }}"
+
+    - name: Deploy via Rclone
+      run: |
+        rclone sync ./public ftp:/public_html --delete-during --verbose
