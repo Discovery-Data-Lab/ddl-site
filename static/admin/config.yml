@@ -40,7 +40,7 @@ collections:
   - name: "testimonials"
     label: "Members"
     folder: "data/testimonials"
-    media_folder: "static/img/testimonials"
+    media_folder: "/static/img/testimonials"
     create: true
     slug: "{{slug}}"
     extension: "yaml"
