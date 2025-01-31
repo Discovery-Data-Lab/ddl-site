@@ -1,13 +1,9 @@
 <style>
     .text-animation {
-        transition: opacity 0.5s ease-in-out, color 0.5s ease-in-out;
-        display: inline-block;
-        min-width: 300px; /* Fixed width for title */
-        height: 60px; /* Fixed height for title */
-        vertical-align: middle;
-        align-items: center;
-        align-self: center;
-        align-content: center;
+        color: #000100;
+        font-size: 1.1em;
+        text-shadow: 10px 10px 50px whitesmoke;
+        text-align: center;
     }
     
     .lead.text-animation {
@@ -20,6 +16,30 @@
         margin: 0 auto;
         padding: 0 20px;
     }
+    /* Add/Modify these styles */
+    .bar.background-pentagon {
+        position: relative;
+        color: #fff;
+    }
+
+    .graph-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        filter: grayscale(0.6) opacity(0.8);
+        background: #fff;
+        transform: scale(1);
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+    }
+
+    .text-animation {
+        position: relative;
+        z-index: 0;
+    }
 </style>
 
 {{ if isset .Site.Params "testimonials" }}
@@ -27,6 +47,7 @@
         {{ if isset .Site.Data "testimonials" }}
             {{ if gt (len .Site.Data.testimonials) 0 }}
                 <section class="bar background-pentagon no-mb">
+                    <canvas class="graph-canvas" id="networkCanvas"></canvas>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -98,7 +119,7 @@
                                                     {{ end }}
                                                 </div>
                                                 <div class="testimonial same-height-always">
-                                                        <div class="text">
+                                                        <div class="text text-animation">
                                                             <strong>{{ .text | markdownify }}</strong>
                                                         </div>                                          
                                                     <div class="bottom">
@@ -134,7 +155,7 @@
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
-                        height: 100%;
+                        height: 10      0%;
                         text-decoration: none;
                         color: inherit;
                     }
@@ -154,7 +175,6 @@
                         justify-content: center;
                         margin-top: 10px;
                         gap: 10px;
-                        /* Align to the bottom */
                     }
 
                     .social-link {
@@ -183,6 +203,137 @@
 {{ end }}
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = document.querySelector('.bar').offsetHeight;
+    
+    const dsTerms = [
+        "UFOP", "UFMG", "USP", "Unicamp", "UFRJ", "UFF", "UFSC", "UFPI", 
+        "UFC", "UFV", "UFRGS", "UFPB", "UFPE", "UFG", "UFPR", 
+        "UFSCar", "UEM", "UFSM", "IFMG", "UFES", "UNESP", "UFBA", 
+        "UFU", "UFJF",  "UNIFEI",
+    ];
+
+    // Node configuration with initial color
+    const nodes = Array.from({length: 30}, (_, i) => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: Math.random() * 0.5 - 0.25,
+        vy: Math.random() * 0.5 - 0.25,
+        connections: [],
+        label: dsTerms[i % dsTerms.length],
+        color: 'rgba(17, 94, 131, 0.8)' // Default color
+    })).filter(node => {
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = 100;
+        const dx = node.x - centerX;
+        const dy = node.y - centerY;
+        return Math.sqrt(dx * dx + dy * dy) > radius;
+    });
+
+    // Community color palette
+    const communityColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#FF9999', '#C4E17F'];
+
+    function findConnectedComponents(nodes) {
+        const visited = new Set();
+        const components = [];
+        for (const node of nodes) {
+            if (!visited.has(node)) {
+                const queue = [node];
+                visited.add(node);
+                const component = [node];
+                while (queue.length > 0) {
+                    const current = queue.shift();
+                    for (const neighbor of current.connections) {
+                        if (!visited.has(neighbor)) {
+                            visited.add(neighbor);
+                            component.push(neighbor);
+                            queue.push(neighbor);
+                        }
+                    }
+                }
+                components.push(component);
+            }
+        }
+        return components;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+    
+
+        // Build connections
+        nodes.forEach((a, i) => {
+            nodes.slice(i + 1).forEach(b => {
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < 150 && Math.random() > 0.3) {
+                    // Draw connection
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(11, 65, 90, ${1 - dist/150})`;
+                    ctx.lineWidth = .5;
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                    
+                    // Add mutual connection
+                    a.connections.push(b);
+                    b.connections.push(a);
+                }
+            });
+        });
+
+        // Detect communities and assign colors
+        const components = findConnectedComponents(nodes);
+        components.forEach((component, index) => {
+            if (component.length >= 3) {
+                const color = communityColors[index % communityColors.length];
+                component.forEach(node => {
+                    node.color = color;
+                });
+            }
+        });
+
+        // Draw nodes
+        nodes.forEach(node => {
+            ctx.beginPath();
+            ctx.fillStyle = node.color;
+            ctx.arc(node.x, node.y, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw label
+            ctx.fillStyle = 'rgba(11, 65, 90, 0.7)';
+            ctx.font = '12px Arial';
+            ctx.fillText(node.label, node.x + 15, node.y + 4);
+        });
+
+        // Update positions
+        nodes.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            if (node.x < 0 || node.x > width) node.vx *= -1;
+            if (node.y < 0 || node.y > height) node.vy *= -1;
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = document.querySelector('.bar').offsetHeight;
+    });
+
+    draw();
+
+    // ... (existing text animation code remains unchanged) ...
+});
+
     document.addEventListener('DOMContentLoaded', function() {
         function animateElement(element, dataAttr) {
             const languages = JSON.parse(element.getAttribute(dataAttr));
