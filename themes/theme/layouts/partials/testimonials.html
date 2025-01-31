@@ -1,3 +1,27 @@
+<style>
+    .text-animation {
+        transition: opacity 0.5s ease-in-out, color 0.5s ease-in-out;
+        display: inline-block;
+        min-width: 300px; /* Fixed width for title */
+        height: 60px; /* Fixed height for title */
+        vertical-align: middle;
+        align-items: center;
+        align-self: center;
+        align-content: center;
+    }
+    
+    .lead.text-animation {
+        min-width: 600px; /* Fixed width for subtitle */
+        height: 80px; /* Fixed height for subtitle */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+</style>
+
 {{ if isset .Site.Params "testimonials" }}
     {{ if .Site.Params.testimonials.enable }}
         {{ if isset .Site.Data "testimonials" }}
@@ -7,18 +31,26 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="heading text-center">
-                                    <h2>{{ .Site.Params.testimonials.title }}</h2>
+                                    <h2 class="text-animation" 
+                                    data-languages='[
+                                    {"text":"Membros", "lang":"pt-BR", "color":"#000100"},
+                                    {"text":"Members", "lang":"en", "color":"#000100"},
+                                    {"text":"Miembros", "lang":"es", "color":"#000100"},
+                                    {"text":"Membres", "lang":"fr", "color":"#000100"},
+                                    {"text":"メンバー", "lang":"ja", "color":"#000100"},
+                                    {"text":"成员", "lang":"zh-CN", "color":"#000100"},
+                                    {"text":"सदस्य", "lang":"hi", "color":"#000100"},
+                                    {"text":"أعضاء", "lang":"ar", "color":"#000100"}
+                                ]'>
+                                    {{ .Site.Params.testimonials.title }}
+                                    </h2>
                                 </div>
-
-                                <p class="lead">
-                                    {{ .Site.Params.testimonials.subtitle | markdownify }}
-                                </p>
 
                                 <!-- *** TESTIMONIALS CAROUSEL *** -->
 
                                 <div class="testimonials-wrapper">
                                     <ul class="owl-carousel testimonials same-height-row"
-                                        data-items="{{ default 4 .Site.Params.CarouselTestimonials.items }}"
+                                        data-items="{{ default 3 }}"
                                         data-autoplay="{{ default false .Site.Params.CarouselTestimonials.auto_play }}"
                                         data-slide-speed="{{ default 2000 .Site.Params.CarouselTestimonials.slide_speed }}"
                                         data-pagination-speed="{{ default 1000 .Site.Params.CarouselTestimonials.pagination_speed }}">
@@ -43,6 +75,21 @@
                                                             <i class="fas fa-envelope"></i>
                                                         </a>
                                                     {{ end }}
+
+                                                        <!-- ResearchGate Link -->
+                                                        {{ if .researchGate_link }}
+                                                        <a href="{{ .researchGate_link }}" target="_blank" class="social-link" aria-label="ResearchGate">
+                                                            <i class="fab fa-researchgate"></i>
+                                                        </a>
+                                                    {{ end }}
+
+                                                    <!-- Lattes Curriculum Link -->
+                                                    {{ if .lattes_link }}
+                                                        <a href="{{ .lattes_link }}" target="_blank" class="social-link" aria-label="Lattes Curriculum">
+                                                            <!-- Use custom icon or alternative Font Awesome icon -->
+                                                            <i class="fas fa-graduation-cap"></i> <!-- Alternative icon suggestion -->
+                                                        </a>
+                                                    {{ end }}
                                                     
                                                     {{ if .personalSite_link }}
                                                         <a href="{{ .personalSite_link }}" target="_blank" class="social-link" aria-label="Website">
@@ -51,9 +98,9 @@
                                                     {{ end }}
                                                 </div>
                                                 <div class="testimonial same-height-always">
-                                                    <div class="text">
-                                                        <p>{{ .text | markdownify }}</p>
-                                                    </div>
+                                                        <div class="text">
+                                                            <strong>{{ .text | markdownify }}</strong>
+                                                        </div>                                          
                                                     <div class="bottom">
                                                         <div class="icon"><i class="fas fa-quote-left"></i></div>
                                                         <div class="name-picture">
@@ -134,3 +181,32 @@
         {{ end }}
     {{ end }}
 {{ end }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function animateElement(element, dataAttr) {
+            const languages = JSON.parse(element.getAttribute(dataAttr));
+            let currentIndex = 0;
+            element.style.color = languages[0].color;
+            
+            const updateText = () => {
+                element.classList.add('fade-out');
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % languages.length;
+                    element.textContent = languages[currentIndex].text;
+                    element.style.color = languages[currentIndex].color;
+                    element.classList.remove('fade-out');
+                    element.classList.add('fade-in');
+                    setTimeout(() => element.classList.remove('fade-in'), 500);
+                }, 500);
+            };
+            setInterval(updateText, 1000);
+        }
+    
+        const title = document.querySelector('h2[data-languages]');
+        const subtitle = document.querySelector('p[data-subtitle-languages]');
+        
+        if (title) animateElement(title, 'data-languages');
+        if (subtitle) animateElement(subtitle, 'data-subtitle-languages');
+    });
+    </script>
