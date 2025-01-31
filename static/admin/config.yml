@@ -53,12 +53,12 @@ collections:
       - { label: "Avatar", name: "avatar", widget: "image", required: true }
 
       # Optional fields (no 'required: true')
-      - { label: "LinkedIn Link", name: "linkedin_link", widget: "string" }
-      - { label: "GitHub Link", name: "github_link", widget: "string" }
-      - { label: "Email", name: "email", widget: "string" }
-      - { label: "Personal Site Link", name: "personalSite_link", widget: "string" }
-      - { label: "Lattes Curriculum", name: "lattes_link", widget: "string" }
-      - { label: "Research Gate Link", name: "researchGate_link", widget: "string" }
+      - { label: "LinkedIn Link", name: "linkedin_link", widget: "string", required: false }
+      - { label: "GitHub Link", name: "github_link", widget: "string", required: false }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Personal Site Link", name: "personalSite_link", widget: "string", required: false }
+      - { label: "Lattes Curriculum", name: "lattes_link", widget: "string", required: false }
+      - { label: "Research Gate Link", name: "researchGate_link", widget: "string", required: false }
 
   - name: "carousel"
     label: "Carousel"
