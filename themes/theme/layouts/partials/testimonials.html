@@ -28,7 +28,7 @@
         left: 0;
         filter: grayscale(0.6) opacity(0.8);
         background: #fff;
-        transform: scale(1);
+        transform: scale(1.01);
     }
 
     .container {
@@ -120,7 +120,9 @@
                                                 </div>
                                                 <div class="testimonial same-height-always">
                                                         <div class="text text-animation">
-                                                            <strong>{{ .text | markdownify }}</strong>
+                                                            <hr>
+                                                            <strong>❝{{ .text | markdownify }}❞</strong>
+                                                            <hr>
                                                         </div>                                          
                                                     <div class="bottom">
                                                         <div class="icon"><i class="fas fa-quote-left"></i></div>
@@ -147,6 +149,7 @@
 
                 <style>
                     .testimonials-wrapper {
+                        
                         position: relative;
                         overflow: hidden;
                     }
@@ -155,13 +158,13 @@
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
-                        height: 10      0%;
+                        height: 30      0%;
                         text-decoration: none;
                         color: inherit;
                     }
 
                     .testimonial .text {
-                        flex-grow: 1;
+                        flex-grow: 3;
                     }
 
                     .bottom {
@@ -210,10 +213,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let height = canvas.height = document.querySelector('.bar').offsetHeight;
     
     const dsTerms = [
-        "UFOP", "UFMG", "USP", "Unicamp", "UFRJ", "UFF", "UFSC", "UFPI", 
-        "UFC", "UFV", "UFRGS", "UFPB", "UFPE", "UFG", "UFPR", 
-        "UFSCar", "UEM", "UFSM", "IFMG", "UFES", "UNESP", "UFBA", 
-        "UFU", "UFJF",  "UNIFEI",
+    "Discovery Data Lab","GA", "REMOCD", "Louvain", "Machine Learning", "Deep Learning", 
+    "Neural Networks", "Big Data", "Python",
+    "TensorFlow", "PyTorch", "Data Mining", "NLP", "Computer Vision",
+    "Reinforcement Learning", "Data Analytics", "AI Ethics", "Statistics",
+    "Algorithms", "Data Visualization", "Keras", "Scikit-learn", "CNN",
+    "Data Engineering", "MLOps", "Feature Engineering", "Neural Networks",
+    "Regression", "Classification"
     ];
 
     // Node configuration with initial color
