@@ -40,7 +40,8 @@ collections:
   - name: "testimonials"
     label: "Members"
     folder: "data/testimonials"
-    media_folder: "/static/img/testimonials"
+    media_folder: "static/img/testimonials"  # Where files are stored in repo
+    public_folder: "/img/testimonials"       # URL path Hugo will use
     create: true
     slug: "{{slug}}"
     extension: "yaml"
