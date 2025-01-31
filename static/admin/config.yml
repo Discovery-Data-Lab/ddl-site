@@ -22,20 +22,38 @@ collections:
 
   - name: "blog"
     label: "Blog"
+    media_folder: "static/img/banners"  # Folder where images will be stored
+    public_folder: "/img/banners"       # Path to access media in the public folder
     folder: "content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Tags", name: "tags", widget: "list", default: [] }
-      - { label: "Categories", name: "categories", widget: "list", default: [] }
-      - { label: "Description", name: "description", widget: "string" }
-      - { label: "Banner Image", name: "banner", widget: "image" }
-      - { label: "Authors", name: "authors", widget: "list", default: [] }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { 
+          label: "Publish Date", 
+          name: "date", 
+          widget: "datetime",
+          format: "YYYY-MM-DDTHH:mm:ss.SSSZ",  
+          time_format: "HH:mm:ss",  
+          date_format: "YYYY-MM-DD",  
+          default: "" ,
+          required: false
+        }
+      - { label: "Tags", name: "tags", widget: "list", default: [], required: false }
+      - { label: "Categories", name: "categories", widget: "list", default: [], required: false }
+      - { label: "Description", name: "description", widget: "text", required: true }  
+      - { label: "Banner Image", name: "banner", widget: "image", required: true }
+      - { 
+          label: "Authors", 
+          name: "authors", 
+          widget: "list", 
+          default: ["Guilherme Oliveira"], 
+          field: { label: "Author", name: "author", widget: "string" },
+          required: false 
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
 
   - name: "testimonials"
     label: "Members"
@@ -75,13 +93,13 @@ collections:
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Link", name: "href", widget: "string" }
 
-  - name: "features" # Name of the collection
-    label: "Features" # Label in the CMS
-    folder: "data/features" # Folder where YAML files will be stored
+  - name: "features" 
+    label: "Features"
+    folder: "data/features" 
     create: true
-    slug: "{{slug}}" # Entry slug generation based on name
-    extension: "yaml" # Set file extension to .yaml
-    format: "yaml" # Use YAML as the file format
+    slug: "{{slug}}"
+    extension: "yaml" 
+    format: "yaml"
     fields:
       - { label: "Weight", name: "weight", widget: "number" }
       - { label: "Name", name: "name", widget: "string" }

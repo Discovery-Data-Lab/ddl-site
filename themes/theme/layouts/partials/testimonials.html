@@ -23,12 +23,7 @@
     }
 
     .graph-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        filter: grayscale(0.6) opacity(0.8);
         background: #fff;
-        transform: scale(1.01);
     }
 
     .container {
@@ -40,15 +35,74 @@
         position: relative;
         z-index: 0;
     }
+
+                    .testimonials-wrapper {
+                        
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .testimonial {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        height: 30      0%;
+                        text-decoration: none;
+                        color: inherit;
+                    }
+
+                    .testimonial .text {
+                        flex-grow: 3;
+                    }
+
+                    .bottom {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 10px;
+                    }
+
+                    .social-links {
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 10px;
+                        gap: 10px;
+                    }
+
+                    .social-link {
+                        color: #0077b5; /* Adjust for each platform if needed */
+                        text-decoration: none;
+                        font-size: 1.2em;
+                        display: inline-block;
+                    }
+
+                    .social-link i {
+                        margin-right: 5px;
+                    }
+
+                    .social-link:hover {
+                        color: #005b9a; /* Darker color on hover */
+                    }
+
+                    .fab, .fas {
+                        margin-right: 5px;
+                    }
+
+    .repeat-img-background {
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
 </style>
+
 
 {{ if isset .Site.Params "testimonials" }}
     {{ if .Site.Params.testimonials.enable }}
         {{ if isset .Site.Data "testimonials" }}
             {{ if gt (len .Site.Data.testimonials) 0 }}
-                <section class="bar background-pentagon no-mb">
-                    <canvas class="graph-canvas" id="networkCanvas"></canvas>
-                    <div class="container">
+                <section class="bar repeat-img-background no-mb">
+                    <div class="container graph-canvas">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="heading text-center">
@@ -75,6 +129,7 @@
                                         data-autoplay="{{ default false .Site.Params.CarouselTestimonials.auto_play }}"
                                         data-slide-speed="{{ default 2000 .Site.Params.CarouselTestimonials.slide_speed }}"
                                         data-pagination-speed="{{ default 1000 .Site.Params.CarouselTestimonials.pagination_speed }}">
+                                        
                                         {{ range .Site.Data.testimonials }}
                                             <li class="item">
                                                 <!-- Social Links Section -->
@@ -147,58 +202,6 @@
                 </section>
                 <!-- /.bar -->
 
-                <style>
-                    .testimonials-wrapper {
-                        
-                        position: relative;
-                        overflow: hidden;
-                    }
-
-                    .testimonial {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
-                        height: 30      0%;
-                        text-decoration: none;
-                        color: inherit;
-                    }
-
-                    .testimonial .text {
-                        flex-grow: 3;
-                    }
-
-                    .bottom {
-                        display: flex;
-                        align-items: center;
-                        margin-top: 10px;
-                    }
-
-                    .social-links {
-                        display: flex;
-                        justify-content: center;
-                        margin-top: 10px;
-                        gap: 10px;
-                    }
-
-                    .social-link {
-                        color: #0077b5; /* Adjust for each platform if needed */
-                        text-decoration: none;
-                        font-size: 1.2em;
-                        display: inline-block;
-                    }
-
-                    .social-link i {
-                        margin-right: 5px;
-                    }
-
-                    .social-link:hover {
-                        color: #005b9a; /* Darker color on hover */
-                    }
-
-                    .fab, .fas {
-                        margin-right: 5px;
-                    }
-                </style>
 
             {{ end }}
         {{ end }}
@@ -206,166 +209,6 @@
 {{ end }}
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const canvas = document.getElementById('networkCanvas');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = document.querySelector('.bar').offsetHeight;
-    
-    const dsTerms = [
-    "UFMG", "UFOP", "USP", "UNICAMP", "UFRJ", "UFRGS", "UFSC", "UFPR", 
-    "UFC", "UFBA", "UFPE", "UFRN", "UFES", "UFMS", "UFMT", "UFAM", "UFT",
-    "UFPB", "UFAL", "UFMA", "UFG", "UFPI", "UNB", "UFS", "UFRA", "UFPA", 
-    "UFTM", "UFV", "UFU", "UFLA"
-];
-
-
-    // Node configuration with initial color
-    const nodes = Array.from({length: 30}, (_, i) => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: Math.random() * 0.5 - 0.25,
-        vy: Math.random() * 0.5 - 0.25,
-        connections: [],
-        label: dsTerms[i % dsTerms.length],
-        color: 'rgba(17, 94, 131, 0.8)' // Default color
-    })).filter(node => {
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = 100;
-        const dx = node.x - centerX;
-        const dy = node.y - centerY;
-        return Math.sqrt(dx * dx + dy * dy) > radius;
-    });
-
-    // Community color palette
-    const communityColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#FF9999', '#C4E17F'];
-
-    function findConnectedComponents(nodes) {
-        const visited = new Set();
-        const components = [];
-        for (const node of nodes) {
-            if (!visited.has(node)) {
-                const queue = [node];
-                visited.add(node);
-                const component = [node];
-                while (queue.length > 0) {
-                    const current = queue.shift();
-                    for (const neighbor of current.connections) {
-                        if (!visited.has(neighbor)) {
-                            visited.add(neighbor);
-                            component.push(neighbor);
-                            queue.push(neighbor);
-                        }
-                    }
-                }
-                components.push(component);
-            }
-        }
-        return components;
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, width, height);
-
-
-        // Build connections
-        nodes.forEach((a, i) => {
-            nodes.slice(i + 1).forEach(b => {
-                const dx = b.x - a.x;
-                const dy = b.y - a.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                
-                if (dist < 150 && Math.random() > 0.3) {
-                    // Draw connection
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(11, 65, 90, ${1 - dist/150})`;
-                    ctx.lineWidth = 2.5;
-                    ctx.moveTo(a.x, a.y);
-                    ctx.lineTo(b.x, b.y);
-                    ctx.stroke();
-
-                    // Calculate weight and draw text
-                    const weight = (1 - dist/150).toFixed(2);
-                    const midX = (a.x + b.x)/2;
-                    const midY = (a.y + b.y)/2;
-                    
-                    // Calculate perpendicular offset direction
-                    const edgeDx = b.x - a.x;
-                    const edgeDy = b.y - a.y;
-                    const edgeLength = Math.sqrt(edgeDx * edgeDx + edgeDy * edgeDy);
-                    let offsetX = 0, offsetY = 0;
-                    if (edgeLength > 0) {
-                        // Get perpendicular vector (rotated 90 degrees)
-                        const perpX = -edgeDy;
-                        const perpY = edgeDx;
-                        // Normalize and scale to 10px offset
-                        offsetX = (perpX / edgeLength) * 10;
-                        offsetY = (perpY / edgeLength) * 10;
-                    }
-
-                    // Draw weight text
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-                    ctx.font = '10px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(weight, midX + offsetX, midY + offsetY);
-                    
-                    // Add mutual connection
-                    a.connections.push(b);
-                    b.connections.push(a);
-                }
-            });
-        });
-
-        // Detect communities and assign colors
-        const components = findConnectedComponents(nodes);
-        components.forEach((component, index) => {
-            if (component.length >= 3) {
-                const color = communityColors[index % communityColors.length];
-                component.forEach(node => {
-                    node.color = color;
-                });
-            } else {
-                component.forEach(node => {
-                    node.color = 'rgba(17, 94, 131, 0.8)'; // Reset to default color
-                });
-            }
-        });
-
-        // Draw nodes
-        nodes.forEach(node => {
-            ctx.beginPath();
-            ctx.fillStyle = node.color;
-            ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Draw label with white rgb
-            ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-            ctx.font = '8px Arial';
-            ctx.fillText(node.label, node.x, node.y);
-        });
-
-        // Update positions
-        nodes.forEach(node => {
-            node.x += node.vx;
-            node.y += node.vy;
-            
-            if (node.x < 0 || node.x > width) node.vx *= -1;
-            if (node.y < 0 || node.y > height) node.vy *= -1;
-        });
-
-        requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = document.querySelector('.bar').offsetHeight;
-    });
-
-    draw();
-});
-
     document.addEventListener('DOMContentLoaded', function() {
         function animateElement(element, dataAttr) {
             const languages = JSON.parse(element.getAttribute(dataAttr));
@@ -380,12 +223,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     element.style.color = languages[currentIndex].color;
                     element.classList.remove('fade-out');
                     element.classList.add('fade-in');
-                    setTimeout(() => element.classList.remove('fade-in'), 500);
+                    element.classList.add('pulse');
+                    setTimeout(() => {
+                        element.classList.remove('pulse');
+                    }, 500);
                 }, 500);
             };
             setInterval(updateText, 1000);
         }
-    
+
         const title = document.querySelector('h2[data-languages]');
         const subtitle = document.querySelector('p[data-subtitle-languages]');
         
@@ -393,3 +239,30 @@ document.addEventListener('DOMContentLoaded', function() {
         if (subtitle) animateElement(subtitle, 'data-subtitle-languages');
     });
 </script>
+<style>
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .fade-in {
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+
+    .pulse {
+        animation: pulse-animation 0.5s;
+    }
+
+    @keyframes pulse-animation {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.23);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>

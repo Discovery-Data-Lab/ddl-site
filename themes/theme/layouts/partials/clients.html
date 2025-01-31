@@ -14,7 +14,7 @@ isset .Site.Data "clients" }} {{ if gt (len .Site.Data.clients) 0 }}
 
                 <ul
                     class="owl-carousel customers"
-                    data-items="{{ default 6 .Site.Params.CarouselCustomers.items }}"
+                    data-items="{{ default 10 }}"
                     data-autoplay="{{ default false .Site.Params.CarouselCustomers.auto_play }}"
                     data-slide-speed="{{ default 2000 .Site.Params.CarouselCustomers.slide_speed }}"
                     data-pagination-speed="{{ default 1000 .Site.Params.CarouselCustomers.pagination_speed }}"

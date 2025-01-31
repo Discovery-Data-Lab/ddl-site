@@ -199,11 +199,11 @@ title = "Membros"
 subtitle = "Nós trabalhamos com diversos membros de diferentes áreas, provendo conhecimento e experiência para os integrantes."
 
 [params.clients]
-enable = false
+enable = true
 # All clients are defined in their own files. You can find example items
 # at 'exampleSite/data/clients'.
 # For more information take a look at the README.
-title = "Our Clients"
+title = "Universidades Parceiras!"
 subtitle = ""
 
 [params.footer.recent_posts]
