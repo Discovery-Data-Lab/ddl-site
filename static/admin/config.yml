@@ -37,26 +37,28 @@ collections:
       - { label: "Authors", name: "authors", widget: "list", default: [] }
       - { label: "Body", name: "body", widget: "markdown" }
 
-  - name: "testimonials"
-    label: "Members"
-    folder: "data/testimonials"
-    create: true
-    slug: "{{slug}}"
-    extension: "yaml"
-    format: "yaml"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Position", name: "position", widget: "string" }
-      - { label: "Text", name: "text", widget: "text" }
-      - { label: "Avatar", name: "avatar", widget: "image" }
-      - { label: "LinkedIn Link", name: "linkedin_link", widget: "string" }
-      - { label: "GitHub Link", name: "github_link", widget: "string" }
-      - { label: "Email", name: "email", widget: "string" }
-      - {
-          label: "Personal Site Link",
-          name: "personalSite_link",
-          widget: "string",
-        }
+    - name: "testimonials"
+      label: "Members"
+      folder: "data/testimonials"
+      media_folder: "img/testimonials"  # Images will save here
+      create: true
+      slug: "{{slug}}"
+      extension: "yaml"
+      format: "yaml"
+      fields:
+        # Required fields
+        - { label: "Name", name: "name", widget: "string", required: true }
+        - { label: "Position", name: "position", widget: "string", required: true }
+        - { label: "Text", name: "text", widget: "text", required: true }
+        - { label: "Avatar", name: "avatar", widget: "image", required: true }
+
+        # Optional fields (no 'required: true')
+        - { label: "LinkedIn Link", name: "linkedin_link", widget: "string" }
+        - { label: "GitHub Link", name: "github_link", widget: "string" }
+        - { label: "Email", name: "email", widget: "string" }
+        - { label: "Personal Site Link", name: "personalSite_link", widget: "string" }
+        - { label: "Lattes Curriculum", name: "lattes_link", widget: "string" }
+        - { label: "Research Gate Link", name: "researchGate_link", widget: "string" }
 
   - name: "carousel"
     label: "Carousel"

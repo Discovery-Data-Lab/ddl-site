@@ -213,14 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let height = canvas.height = document.querySelector('.bar').offsetHeight;
     
     const dsTerms = [
-    "Discovery Data Lab","GA", "REMOCD", "Louvain", "Machine Learning", "Deep Learning", 
-    "Neural Networks", "Big Data", "Python",
-    "TensorFlow", "PyTorch", "Data Mining", "NLP", "Computer Vision",
-    "Reinforcement Learning", "Data Analytics", "AI Ethics", "Statistics",
-    "Algorithms", "Data Visualization", "Keras", "Scikit-learn", "CNN",
-    "Data Engineering", "MLOps", "Feature Engineering", "Neural Networks",
-    "Regression", "Classification"
-    ];
+    "UFMG", "UFOP", "USP", "UNICAMP", "UFRJ", "UFRGS", "UFSC", "UFPR", 
+    "UFC", "UFBA", "UFPE", "UFRN", "UFES", "UFMS", "UFMT", "UFAM", "UFT",
+    "UFPB", "UFAL", "UFMA", "UFG", "UFPI", "UNB", "UFS", "UFRA", "UFPA", 
+    "UFTM", "UFV", "UFU", "UFLA"
+];
+
 
     // Node configuration with initial color
     const nodes = Array.from({length: 30}, (_, i) => ({
@@ -269,7 +267,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function draw() {
         ctx.clearRect(0, 0, width, height);
-    
+        
+        // Clear existing connections
+        nodes.forEach(node => {
+            node.connections = [];
+        });
 
         // Build connections
         nodes.forEach((a, i) => {
@@ -282,10 +284,36 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Draw connection
                     ctx.beginPath();
                     ctx.strokeStyle = `rgba(11, 65, 90, ${1 - dist/150})`;
-                    ctx.lineWidth = .5;
+                    ctx.lineWidth = 1.5;
                     ctx.moveTo(a.x, a.y);
                     ctx.lineTo(b.x, b.y);
                     ctx.stroke();
+
+                    // Calculate weight and draw text
+                    const weight = (1 - dist/150).toFixed(2);
+                    const midX = (a.x + b.x)/2;
+                    const midY = (a.y + b.y)/2;
+                    
+                    // Calculate perpendicular offset direction
+                    const edgeDx = b.x - a.x;
+                    const edgeDy = b.y - a.y;
+                    const edgeLength = Math.sqrt(edgeDx * edgeDx + edgeDy * edgeDy);
+                    let offsetX = 0, offsetY = 0;
+                    if (edgeLength > 0) {
+                        // Get perpendicular vector (rotated 90 degrees)
+                        const perpX = -edgeDy;
+                        const perpY = edgeDx;
+                        // Normalize and scale to 10px offset
+                        offsetX = (perpX / edgeLength) * 10;
+                        offsetY = (perpY / edgeLength) * 10;
+                    }
+
+                    // Draw weight text
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(weight, midX + offsetX, midY + offsetY);
                     
                     // Add mutual connection
                     a.connections.push(b);
@@ -302,6 +330,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 component.forEach(node => {
                     node.color = color;
                 });
+            } else {
+                component.forEach(node => {
+                    node.color = 'rgba(17, 94, 131, 0.8)'; // Reset to default color
+                });
             }
         });
 
@@ -309,13 +341,13 @@ document.addEventListener('DOMContentLoaded', function() {
         nodes.forEach(node => {
             ctx.beginPath();
             ctx.fillStyle = node.color;
-            ctx.arc(node.x, node.y, 15, 0, Math.PI * 2);
+            ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
             ctx.fill();
             
-            // Draw label
-            ctx.fillStyle = 'rgba(11, 65, 90, 0.7)';
+            // Draw label with white rgb
+            ctx.fillStyle = 'rgba(255, 255, 255, 1)';
             ctx.font = '12px Arial';
-            ctx.fillText(node.label, node.x + 15, node.y + 4);
+            ctx.fillText(node.label, node.x, node.y);
         });
 
         // Update positions
@@ -336,8 +368,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     draw();
-
-    // ... (existing text animation code remains unchanged) ...
 });
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -366,4 +396,4 @@ document.addEventListener('DOMContentLoaded', function() {
         if (title) animateElement(title, 'data-languages');
         if (subtitle) animateElement(subtitle, 'data-subtitle-languages');
     });
-    </script>
+</script>
