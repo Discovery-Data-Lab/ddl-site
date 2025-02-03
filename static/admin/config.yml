@@ -1,3 +1,12 @@
+# @Guilherme: For instance, we use the netlify-cms-app package to create a custom CMS for our blog.
+# This is *not* hosted by any computer in our network, but by Netlify.
+# If some things changes in the future, it is nice to make a self-hosted CMS.
+# For that, we can use the GoTrue package, which is a self-hosted version of the Netlify Identity service.
+# This is a good option for us because we can use the same authentication system that we use in our blog.
+# Check the links below for more information:
+# https://decapcms.org/docs/git-gateway-backend/
+# https://github.com/netlify/gotrue
+
 backend:
   name: git-gateway
   repo: Discovery-Data-Lab/blog # Your GitHub repository
