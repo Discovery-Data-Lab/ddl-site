@@ -22,7 +22,7 @@ collections:
 
   - name: "blog"
     label: "Blog"
-    media_folder: "static/img/banners"  # Folder where images will be stored
+    media_folder: "/static/img/banners"  # Folder where images will be stored
     public_folder: "/img/banners"       # Path to access media in the public folder
     folder: "content/blog"
     create: true
