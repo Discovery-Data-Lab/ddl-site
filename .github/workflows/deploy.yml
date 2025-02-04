@@ -30,6 +30,13 @@ jobs:
       run: |
         rclone config create ftp ftp host "${{ secrets.FTP_SERVER }}" user "${{ secrets.FTP_USER }}" pass "${{ secrets.FTP_PASSW }}"
 
-    - name: Deploy via Rclone
+    - name: Deploy via LFTP
       run: |
-        rclone sync ./public_html ftp:/public_html --delete-during --verbose --auto-confirm --transfers=4 --checkers=4
+        lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASSW }}" -e "
+        set ftp:ssl-allow no;
+        set net:timeout 10;
+        set net:max-retries 2;
+        mirror -R --parallel=8 --delete ./public_html /public_html;
+        bye
+        " ${{ secrets.FTP_SERVER }}
+
