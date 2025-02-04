@@ -21,18 +21,15 @@ jobs:
         hugo-version: '0.111.3' 
 
     - name: Build Hugo site
-      run: hugo
+      run: hugo --gc --minify
 
-    - name: Install lftp
-      run: sudo apt-get install lftp -y
+    - name: Install Rclone
+      run: sudo apt-get install -y rclone
 
-    - name: Deploy via LFTP
+    - name: Configure Rclone
       run: |
-        lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASSW }}" -e "
-        set ftp:ssl-allow no;
-        set net:timeout 10;
-        set net:max-retries 2;
-        mirror -R --parallel=8 --delete ./public_html /public_html;
-        bye
-        " ${{ secrets.FTP_SERVER }}
+        rclone config create ftp ftp host "${{ secrets.FTP_SERVER }}" user "${{ secrets.FTP_USER }}" pass "${{ secrets.FTP_PASSW }}"
 
+    - name: Deploy via Rclone
+      run: |
+        rsync -avz --delete --progress -e "ssh -o StrictHostKeyChecking=no" ./public_html ${{ secrets.FTP_USER }}@${{ secrets.FTP_SERVER }}:/var/www/html
