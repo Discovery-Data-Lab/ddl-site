@@ -32,4 +32,10 @@ jobs:
 
     - name: Deploy via Rclone
       run: |
-        rclone sync ./public_html ftp:/public_html --fast-list --use-mmap --verbose --auto-confirm --transfers=8 --checkers=4
+        rclone sync ./public_html ftp:/public_html \
+          --ignore-existing \
+          --fast-list \
+          --transfers=8 \
+          --checkers=8 \
+          --verbose
+
