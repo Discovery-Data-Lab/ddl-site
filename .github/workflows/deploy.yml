@@ -32,4 +32,4 @@ jobs:
 
     - name: Deploy via Rclone
       run: |
-        rsync -avz --delete --progress -e "ssh -o StrictHostKeyChecking=no" ./public_html ${{ secrets.FTP_USER }}@${{ secrets.FTP_SERVER }}:/var/www/html
+        rclone sync ./public_html ftp:/public_html --fast-list --use-mmap --verbose --auto-confirm --transfers=8 --checkers=4
