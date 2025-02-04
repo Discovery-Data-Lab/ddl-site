@@ -6,7 +6,7 @@ tags:
 categories:
   - youtube
 description: este é um exemplo para o yotube
-banner: /img/banners/logotipo-do-youtube-com-um-quadrado-vermelho_876006-17.png
+banner: /img/banners/images.png
 authors:
   - Guilherme Oliveira
   - Autor 2
