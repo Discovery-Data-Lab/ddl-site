@@ -23,8 +23,8 @@ jobs:
     - name: Build Hugo site
       run: hugo
 
-    - name: Install Rclone
-      run: sudo apt-get install -y rclone
+    - name: Install lftp
+      run: sudo apt-get install lftp -y
 
     - name: Configure Rclone
       run: |
