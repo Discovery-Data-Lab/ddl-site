@@ -26,10 +26,6 @@ jobs:
     - name: Install lftp
       run: sudo apt-get install lftp -y
 
-    - name: Configure Rclone
-      run: |
-        rclone config create ftp ftp host "${{ secrets.FTP_SERVER }}" user "${{ secrets.FTP_USER }}" pass "${{ secrets.FTP_PASSW }}"
-
     - name: Deploy via LFTP
       run: |
         lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASSW }}" -e "
