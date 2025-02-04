@@ -21,8 +21,7 @@ jobs:
         hugo-version: '0.111.3' 
 
     - name: Build Hugo site
-      run: hugo --gc --minify
-
+      run: hugo
     - name: Install Rclone
       run: sudo apt-get install -y rclone
 
@@ -32,5 +31,4 @@ jobs:
 
     - name: Deploy via Rclone
       run: |
-        rclone sync ./public_html ftp:/public_html --delete-during --verbose --auto-confirm --transfers=8 --checkers=8
-
+        rclone sync ./public_html ftp:/public_html --checksum --fast-list --verbose --auto-confirm --transfers=6 --checkers=6
