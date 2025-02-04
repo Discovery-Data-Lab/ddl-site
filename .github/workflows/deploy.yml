@@ -21,7 +21,7 @@ jobs:
         hugo-version: '0.111.3' 
 
     - name: Build Hugo site
-      run: hugo --gc --minify
+      run: hugo
 
     - name: Install Rclone
       run: sudo apt-get install -y rclone
