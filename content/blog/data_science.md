@@ -346,10 +346,6 @@ b = 3
 print(f"A soma de {a} e {b} é {a + b}.")  # Saída: A soma de 5 e 3 é 8.
 ```  
 
-Aqui está o texto revisado com exemplos claros e explicações detalhadas:
-
----
-
 ## Outros Tipos
 
 ### Booleanos   
