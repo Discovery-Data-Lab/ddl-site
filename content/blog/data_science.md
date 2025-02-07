@@ -73,13 +73,13 @@ A tabela abaixo apresenta a média (`μ`) dos tempos de execução ao longo de 1
 
 | **Linguagem**                     | **μ**               | **dP** |
 |------------------------------------|-----------------------------|------------------------|
-| Rust                               | 0,10                        | ± 0,1                  |
-| C (gcc -O0)                        | 0,19                        | ± 0,1                  |
-| Python                             | **3,17**                    | ± 0,1                  |
-| Rust (Threading + --release)       | 0,03                        | ± 0,1                  |
-| C (Threading + gcc -O3)            | 0,04                        | ± 0,2                  |
-| Python (Multiprocessing)           | **0,77**                    | ± 0,2                  |
-| Python (Multiprocessing + PyPy)    | **0,09**                    | ± 0,2                  |
+| Rust                               | 0.10ms                      | ± 0.1                  |
+| C (gcc -O0)                        | 0.19ms                      | ± 0.1                  |
+| Python                             | **3.17**ms                  | ± 0.1                  |
+| Rust (Threading + --release)       | 0.03ms                      | ± 0.1                  |
+| C (Threading + gcc -O3)            | 0.04ms                      | ± 0.2                  |
+| Python (Multiprocessing)           | **0.77**ms                  | ± 0.2                  |
+| Python (Multiprocessing + PyPy)    | **0.09** ms                 | ± 0.2                  |
 
 Os resultados demonstram que a performance pode variar significativamente, especialmente no Python. No entanto, observa-se que o uso de paralelismo e otimizações como `PyPy` podem reduzir consideravelmente esse impacto. Ainda assim, linguagens compiladas continuam a apresentar desempenho superior em termos de velocidade.  
 

@@ -1,4 +1,4 @@
-baseurl = "https://discoverydatalab.ufop.br/" # Configure URL. if using gh-pages https://github.com/<username>/hugo-universal-theme URL: https://<username>.github.io/hugo-universal-theme/
+baseurl = "https://discoverydatalab.ufop.br/" 
 title = "Discovery Data Lab"
 theme = "theme"
 themesDir = "themes"
@@ -70,7 +70,8 @@ facebook_site = ""                                # the Facebook page
 twitter_site = ""                                 # the Twitter handle (without the '@')
 default_sharing_image = "img/sharing-default.png"
 
-# Google Maps widget: If `googleMapsApiKey` is not set, no key will be passed to Google (which likely results in a broken map widget).
+# Google Maps widget: If `googleMapsApiKey` is not set, 
+# no key will be passed to Google (which likely results in a broken map widget).
 # But i changed to use iframe, so this can work for a while
 enableGoogleMaps = true
 googleMapsApiKey = "xD"
@@ -116,7 +117,7 @@ enableRecaptchaInContactForm = false
 googleRecaptchaKey = "site_key_for_google_recaptcha"
 
 about_us = "<p>Estamos comprometidos em avançar no conhecimento científico e tecnológico, aplicando métodos para gerar soluções práticas que beneficiem a sociedade. Acreditamos que, por meio da pesquisa interdisciplinar e da colaboração, podemos contribuir significativamente para o progresso dessas áreas e formar profissionais altamente capacitados.</p>"
-copyright = "<strong>Copyright (c) 2024 - Guilherme Oliveira & Discovery Data Lab - Todos os direitos reservados.</strong>"
+copyright = "<strong>Copyright (c) 2024 - Guilherme Oliveira - GNU General Public License Version 3.0</strong>"
 
 # Format dates with Go's time formatting
 date_format = "January 2, 2006"
@@ -183,7 +184,7 @@ link_text = "Clique aqui"
 
 [params.recent_posts]
 enable = true
-title = "🖥️ Saiu do forno 🔥"
+title = "Últimos Posts"
 subtitle = "“Pesquisas mostram que você começa a aprender no útero e continua aprendendo até o momento em que morre. Seu cérebro tem uma capacidade de aprendizado que é virtualmente ilimitada, o que torna todo ser humano um gênio em potencial.” — Michael J. Gelb"
 hide_summary = false
 
