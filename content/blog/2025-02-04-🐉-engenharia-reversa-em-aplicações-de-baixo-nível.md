@@ -5,15 +5,15 @@ tags:
   - Hacking
 categories:
   - C
-description: A Engenharia Reversa é a arte de pegar um programa já compilado em
-  formato binário e tentar descobrir seu funcionamento interno. Em outras
-  palavras, é o processo de analisar e entender o comportamento de um software
-  sem ter acesso ao código-fonte original.
 banner: https://0l1ve1r4.netlify.app/post/reverse-engineering/images/GHIDRA_2.png
 authors:
   - Guilherme Oliveira
 ---
-> everything is open source if you can reverse engineer.
+
+A Engenharia Reversa é a arte de pegar um programa já compilado em
+  formato binário e tentar descobrir seu funcionamento interno. Em outras
+  palavras, é o processo de analisar e entender o comportamento de um software
+  sem ter acesso ao código-fonte original.
 
 - - -
 

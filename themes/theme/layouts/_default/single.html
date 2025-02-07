@@ -1,90 +1,143 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
-
   <head>
     {{ partial "headers.html" . }}
     {{ partial "custom_headers.html" . }}
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1em;
+      }
+      table, th, td {
+        border: 1px solid #ccc;
+      }
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      #sidebar-toc {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-left: 4px solid #3498db; /* Accent left border */
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+      }
+      #sidebar-toc h3 {
+        margin-top: 0;
+        font-size: 1.2em;
+        color: #3498db;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+      }
+      /* Use CSS counters on the ordered list to enumerate headings */
+      #sidebar-toc nav ol {
+        counter-reset: item; /* Reset the counter */
+        list-style-type: none; /* Remove default numbering */
+        padding-left: 0;
+        margin-left: 0;
+      }
+      #sidebar-toc nav ol li {
+        margin-bottom: 5px;
+        counter-increment: item; /* Increment the counter for each list item */
+        position: relative;
+        padding-left: 2em; /* Provide space for the generated number */
+      }
+      #sidebar-toc nav ol li::before {
+        content: counters(item, ".") " "; /* Create hierarchical numbers */
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: bold;
+        color: #3498db;
+      }
+      /* Reset the counter in nested lists */
+      #sidebar-toc nav ol li ol {
+        counter-reset: item;
+        list-style-type: none;
+        margin-left: 0;
+        padding-left: 0;
+      }
+      /* Link styling */
+      #sidebar-toc nav a {
+        color: #555;
+        text-decoration: none;
+      }
+      #sidebar-toc nav a:hover {
+        color: #3498db;
+        text-decoration: underline;
+      }
+    </style>
   </head>
-
   <body>
-
     <div id="all">
+      {{ partial "top.html" . }}
+      {{ partial "nav.html" . }}
+      {{ partial "breadcrumbs.html" . }}
 
-        {{ partial "top.html" . }}
+      <div id="content">
+        <div class="container">
+          <div class="row">
 
-        {{ partial "nav.html" . }}
+            <!-- LEFT COLUMN: Blog Post -->
+            <div class="col-md-9" id="blog-post">
+              {{ if or .Params.author .Params.date }}
+                <p class="text-muted text-uppercase mb-small text-right">
+                  {{ if isset .Params "authors" }}
+                    {{ i18n "authorBy" }} 
+                    {{ range $index, $author := .Params.authors }}
+                      {{ if $index }}, {{ end }}
+                      <a href="{{ (printf "%s/%s" ("authors" | relLangURL) ($author | urlize)) }}">{{ $author }}</a>
+                    {{ end }}
+                  {{ end }}
+                  {{ if and .Params.author .Params.date }} | {{ end }}
+                  {{ if .Params.date }}
+                    {{ $createdAt := .Date.Format .Site.Params.date_format }}
+                    {{ range $index, $month := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" }}
+                      {{ $createdAt = replace $createdAt $month (i18n $month) }}
+                    {{ end }}
+                    {{ $createdAt }}
+                  {{ end }}
+                </p>
+              {{ end }}
 
-        {{ partial "breadcrumbs.html" . }}
+              <div id="post-content" style="font-size: 18px; line-height: 1.6;">
+                {{ .Content }}
+              </div>
+              <!-- /#post-content -->
 
-        <div id="content">
-            <div class="container">
-
-                <div class="row">
-
-                    <!-- *** LEFT COLUMN *** -->
-
-                    <div class="col-md-9" id="blog-post">
-
-                        {{ if or .Params.author .Params.date }}
-                          <p class="text-muted text-uppercase mb-small text-right">
-                            {{ if isset .Params "authors" }}
-			      {{ i18n "authorBy" }} {{ range $index, $author := .Params.authors }}{{ if $index }}, {{ end }}<a href="{{ (printf "%s/%s" ("authors" | relLangURL) ($author | urlize)) }}">{{ $author }}</a>{{ end }}
-                            {{ end }}
-                            {{ if and .Params.author .Params.date }} | {{ end }}
-                            {{ if .Params.date }}
-                              {{ $createdAt := .Date.Format .Site.Params.date_format }}
-                              {{ range $index, $month := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" }}
-                                  {{ $createdAt = replace $createdAt $month (i18n $month) }}
-                              {{ end }}
-                              {{ $createdAt }}
-                            {{ end }}
-                          </p>
-                        {{ end }}
-
-                        <div id="post-content">
-                          {{ .Content }}
-                        </div>
-                        <!-- /#post-content -->
-                        {{ if .Site.Config.Services.Disqus.Shortname }}
-                        <div id="comments">
-                            {{ template "_internal/disqus.html" . }}
-                        </div>
-                        {{ end }}
-
-                    </div>
-                    <!-- /#blog-post -->
-
-                    <!-- *** LEFT COLUMN END *** -->
-
-                    <!-- *** RIGHT COLUMN *** -->
-
-                    <div class="col-md-3">
-
-                        <!-- *** MENUS AND WIDGETS *** -->
-
-                        {{ partial "sidebar.html" . }}
-
-                        <!-- *** MENUS AND FILTERS END *** -->
-
-                    </div>
-                    <!-- /.col-md-3 -->
-
-                    <!-- *** RIGHT COLUMN END *** -->
-
+              {{ if .Site.Config.Services.Disqus.Shortname }}
+                <div id="comments">
+                  {{ template "_internal/disqus.html" . }}
                 </div>
-                <!-- /.row -->
-
+              {{ end }}
             </div>
-            <!-- /.container -->
+            <!-- /#blog-post -->
+
+            <!-- RIGHT COLUMN: TOC + Sidebar (Categories, Tags, etc.) -->
+            <div class="col-md-3">
+              <!-- Table of Contents block -->
+              <div id="sidebar-toc">
+                <h3>Contents</h3>
+                {{ .TableOfContents }}
+              </div>
+              <!-- Existing sidebar with categories and tags -->
+              {{ partial "sidebar.html" . }}
+            </div>
+            <!-- /.col-md-3 -->
+
+          </div>
+          <!-- /.row -->
         </div>
-        <!-- /#content -->
+        <!-- /.container -->
+      </div>
+      <!-- /#content -->
 
-        {{ partial "footer.html" . }}
-
+      {{ partial "footer.html" . }}
     </div>
     <!-- /#all -->
 
     {{ partial "scripts.html" . }}
-
   </body>
 </html>
