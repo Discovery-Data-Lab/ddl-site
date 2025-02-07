@@ -212,9 +212,9 @@ tag = "tags"
 author = "authors"
 
 [outputs]
-home = ["HTML", "JSON"]
+home = ["HTML"]
 
 [markup]
   [markup.tableOfContents]
     startLevel = 1   # Adjust to include h1 if you want
-    endLevel = 6     # Change as needed
+    endLevel = 2     # Change as needed
