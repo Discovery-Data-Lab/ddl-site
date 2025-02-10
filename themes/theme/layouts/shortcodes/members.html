@@ -84,7 +84,7 @@
             <div class="tweet-user-info">
               <h5>
                 {{ .name }}
-                <span class="tweet-handle">- {{ .position }}</span>
+                <span class="tweet-handle">{{ .position }}</span>
               </h5>
             </div>
             <div class="tweet-social-links">
@@ -120,7 +120,8 @@
               {{ end }}
             </div>
           </div>
-          <p>❝{{ .text | markdownify }}❞</p>
+          <br>
+          <p>{{ .text | markdownify }}</p>
         </div>
       </div>
     {{ end }}
