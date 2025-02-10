@@ -1,0 +1,128 @@
+<style>
+    .testimonials-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .testimonial-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .tweet-card {
+      border: 1px solid #e1e8ed;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin: 1rem;
+      width: calc(50% - 2rem); /* Duas colunas por linha */
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .tweet-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+    .tweet-user-info {
+      display: flex;
+      align-items: center;
+    }
+    .tweet-user-info h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #14171a;
+    }
+    .tweet-user-info .tweet-handle {
+      color: #657786;
+      font-size: 0.9rem;
+      margin-left: 5px;
+    }
+    .tweet-social-links a {
+      margin-left: 5px;
+      color: #1da1f2;
+      text-decoration: none;
+    }
+    .tweet-content {
+      margin-left: 10px;
+      font-size: 1rem;
+      color: #14171a;
+      flex: 1;
+    }
+    @media (max-width: 768px) {
+      .tweet-card {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%; /* Em telas menores, uma coluna */
+      }
+      .tweet-content {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+    }
+</style>
+
+<div class="testimonials-wrapper">
+  <div class="testimonial-container">
+    {{ range .Site.Data.testimonials }}
+      <div class="tweet-card">
+        <img class="tweet-avatar" alt="Avatar of {{ .name }}" src="{{ .avatar | absURL }}">
+        <div class="tweet-content">
+          <div class="tweet-header">
+            <div class="tweet-user-info">
+              <h5>
+                {{ .name }}
+                <span class="tweet-handle">- {{ .position }}</span>
+              </h5>
+            </div>
+            <div class="tweet-social-links">
+              {{ if .linkedin_link }}
+                <a href="{{ .linkedin_link }}" target="_blank" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+              {{ end }}
+              {{ if .github_link }}
+                <a href="{{ .github_link }}" target="_blank" aria-label="GitHub">
+                  <i class="fab fa-github"></i>
+                </a>
+              {{ end }}
+              {{ if .email }}
+                <a href="mailto:{{ .email }}" aria-label="Email">
+                  <i class="fas fa-envelope"></i>
+                </a>
+              {{ end }}
+              {{ if .researchGate_link }}
+                <a href="{{ .researchGate_link }}" target="_blank" aria-label="ResearchGate">
+                  <i class="fab fa-researchgate"></i>
+                </a>
+              {{ end }}
+              {{ if .lattes_link }}
+                <a href="{{ .lattes_link }}" target="_blank" aria-label="Lattes Curriculum">
+                  <i class="fas fa-graduation-cap"></i>
+                </a>
+              {{ end }}
+              {{ if .personalSite_link }}
+                <a href="{{ .personalSite_link }}" target="_blank" aria-label="Website">
+                  <i class="fas fa-globe"></i>
+                </a>
+              {{ end }}
+            </div>
+          </div>
+          <p>❝{{ .text | markdownify }}❞</p>
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</div>

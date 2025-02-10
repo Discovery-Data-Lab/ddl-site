@@ -35,22 +35,28 @@ url = "/blog/"
 weight = 2
 
 [[menu.main]]
-name = "Perguntas Frequentes"
+name = "Time"
+identifier = "menu.team"
+url = "/team/"
+weight = 3
+
+[[menu.main]]
+name = "FAQ"
 identifier = "menu.faq"
 url = "/faq/"
-weight = 3
+weight = 4
 
 [[menu.main]]
 identifier = "Contato"
 name = "Contato"
 url = "/contact/"
-weight = 4
+weight = 5
 
 [[menu.main]]
 name = "GitHub"
 identifier = "menu.about"
 url = "https://github.com/Discovery-Data-Lab"
-weight = 5
+weight = 6
 
 [params]
 viewMorePostLink = "/blog/"
