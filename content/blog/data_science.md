@@ -9,13 +9,14 @@ tags:
   - python
 categories:
   - dados
+description: "A ciência de dados é o processo de analisar grandes conjuntos de dados para descobrir padrões. Combina estatísticas, programação e conhecimento do domínio. Aqui, iremos trazer um guia completo sobre este tema para ajudar novas pessoas na área."
 banner: /img/banners/11042_2020_8700_fig1_html.png
 authors:
   - Guilherme Oliveira
   - Carlos Henrique G. Ferreira
 ---
 
-A ciência de dados é o processo de analisar grandes conjuntos de dados para descobrir padrões. Combina estatísticas, programação e conhecimento do domínio. Aqui, iremos trazer um guia completo sobre este tema para ajudar novas pessoas na área.
+
 
 <!--more-->
 

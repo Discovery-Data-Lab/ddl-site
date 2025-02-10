@@ -4,6 +4,44 @@
     {{ partial "headers.html" . }}
     {{ partial "custom_headers.html" . }}
     <style>
+    .max-w-prose {
+      max-width: 100ch; /* Limits the width to improve readability */
+    }
+
+    .grid {
+      display: grid; /* Enables grid layout */
+    }
+
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr)); /* Single-column layout by default */
+    }
+
+    .md\:grid-cols-\[200px_auto\] {
+      @media (min-width: 768px) {
+        grid-template-columns: 200px auto; /* On medium screens, use two columns */
+      }
+    }
+
+    .gap-4 {
+      gap: 10rem; /* Spacing between grid items */
+    }
+
+    .my-6 {
+      margin-top: 3.5rem;
+      margin-bottom: 3.5rem; /* Vertical spacing */
+    }
+
+    .font-bold {
+      font-weight: 700; /* Makes the text bold */
+    }
+
+    .text-2xl {
+      font-size: 2.5rem; /* Larger text size */
+      line-height: 2rem;
+    }
+
+
+
       /* Table Styles */
       table {
         border-collapse: collapse;
@@ -55,6 +93,15 @@
                 </p>
               {{ end }}
 
+              {{ if .Params.description }}
+
+              <div class="max-w-prose mx-auto grid grid-cols-1 md:grid-cols-[200px_auto] gap-4 my-6 text-center md:text-left">
+                <div class="font-bold text-2xl"><strong>Resumo</strong></div>
+                <div><i>{{ .Params.description }}</i></div>
+              </div>
+              <hr class="border-t border-gray-300 w-full max-w-prose mx-auto">
+            {{ end }}
+            
               <div id="post-content" style="font-size: 18px; line-height: 1.6;">
                 {{ .Content }}
               </div>
