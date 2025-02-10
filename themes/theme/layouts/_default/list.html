@@ -52,8 +52,8 @@
                                               <a href="{{ "categories/" | relLangURL }}{{ . | urlize | lower }}">{{ $category }}</a>{{ end }}
                                           {{ end }}
                                           {{ end }}
-
                                         </p>
+
                                         {{ if isset .Params "date" }}
 
                                         {{ $createdAt := .Date.Format .Site.Params.date_format }}
@@ -61,16 +61,19 @@
                                             {{ $createdAt = replace $createdAt $month (i18n $month) }}
                                         {{ end }}
 
+
                                         <p class="date-comments">
                                             <a href="{{ .Permalink }}"><i class="far fa-calendar"></i> {{ $createdAt }}</a>
                                         </p>
                                         {{ end }}
                                     </div>
-                                    {{ if not .Site.Params.recent_posts.hide_summary }}
-                                    <p class="intro">{{ .Summary }}</p>
+
+                                    {{ if .Params.description }}
+                                    <p class="intro">{{ .Params.description }}</p>
                                     <p class="read-more"><a href="{{ .Permalink }}" class="btn btn-template-main">{{ i18n "continueReading" }}</a>
-                                    </p>
-                                    {{ end }}
+
+                                    {{end}}
+
                                 </div>
                             </div>
                         </section>

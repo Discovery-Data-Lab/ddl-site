@@ -36,8 +36,10 @@
     }
 
     .text-2xl {
+      padding-top: 0rem;
       font-size: 2.5rem; /* Larger text size */
       line-height: 2rem;
+      padding-bottom: 3rem;
     }
 
 
@@ -96,10 +98,9 @@
               {{ if .Params.description }}
 
               <div class="max-w-prose mx-auto grid grid-cols-1 md:grid-cols-[200px_auto] gap-4 my-6 text-center md:text-left">
-                <div class="font-bold text-2xl"><strong>Resumo</strong></div>
-                <div><i>{{ .Params.description }}</i></div>
+                <div class="font-bold text-2xl"><h2>Resumo</h2></div>
+                <div><p>{{ .Params.description }}</p></div>
               </div>
-              <hr class="border-t border-gray-300 w-full max-w-prose mx-auto">
             {{ end }}
             
               <div id="post-content" style="font-size: 18px; line-height: 1.6;">
