@@ -20,14 +20,15 @@ collections:
   - name: "pages"
     label: "Pages"
     folder: "content"
+    media_folder: "/static/img/banners"  # Folder where images will be stored
+    public_folder: "/img/banners"       # Path to access media in the public folder
     create: true
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "ID", name: "id", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
 
   - name: "blog"
     label: "Blog"
