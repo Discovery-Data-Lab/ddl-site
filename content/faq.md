@@ -6,7 +6,6 @@ keywords:
   - Como fazer
   - perguntas
   - o que fazer
-id: "-"
 ---
 ## 1. O QUE FAZER SE EU AINDA NÃO RECEBI A RESPOSTA DA PESQUISA?
 
