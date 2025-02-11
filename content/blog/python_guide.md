@@ -1,5 +1,5 @@
 ---
-title: "Ciência de Dados: Um Guia Completo"
+title: "Python: Um Guia Inicial"
 date: 2025-02-06T09:48:00.000-03:00
 tags:
   - ciências de dados
@@ -9,8 +9,8 @@ tags:
   - python
 categories:
   - dados
-description: "A ciência de dados é o processo de analisar grandes conjuntos de dados para descobrir padrões. Combina estatísticas, programação e conhecimento do domínio. Aqui, iremos trazer um guia completo sobre este tema para ajudar novas pessoas na área."
-banner: /img/banners/11042_2020_8700_fig1_html.png
+description: "A ciência de dados é o processo de analisar grandes conjuntos de dados para descobrir padrões. Combina estatísticas, programação e conhecimento do domínio, e isto deve ser feito com linguagens apropriadas que possam te ajudar. Aqui, iremos trazer um guia completo de python para ajudar novas pessoas na área."
+banner: /img/banners/python-banner.png
 authors:
   - Guilherme Oliveira
   - Carlos Henrique G. Ferreira
@@ -594,38 +594,3 @@ for i in range(len(nomes)):
 # Índice 1: Carlos
 # Índice 2: Maria
 ```  
-
-
-- - -
-
-
-
-# Estrutura de Dados
-
-- - -
-
-# Aplicações e Desenvolvimento de Funçõe
-
-- - -
-
-# Módulo Numpy
-
-- - -
-
-# Módulo Pandas
-
-- - -
-
-# Outros Modulos Interessantes
-
-- - -
-
-# Plotagem e Visualização
-
-- - -
-
-# Paralelismo
-
-- - -
-
-# Otimizações (PyPy/Numba/Ctypes)

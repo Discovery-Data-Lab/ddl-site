@@ -224,4 +224,4 @@ home = ["HTML"]
 [markup]
   [markup.tableOfContents]
     startLevel = 1   # Adjust to include h1 if you want
-    endLevel = 2     # Change as needed
+    endLevel = 3     # Change as needed
