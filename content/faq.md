@@ -1,11 +1,13 @@
-+++
-title = "FAQ"
-description = "Perguntas Frequentes"
-keywords = ["FAQ", "Como fazer", "perguntas", "o que fazer"]
-+++
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
-
+---
+title: FAQ
+description: Perguntas Frequentes
+keywords:
+  - FAQ
+  - Como fazer
+  - perguntas
+  - o que fazer
+id: "-"
+---
 ## 1. O QUE FAZER SE EU AINDA NÃO RECEBI A RESPOSTA DA PESQUISA?
 
 Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
@@ -37,4 +39,3 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac tu
 * Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 * Aliquam tincidunt mauris eu risus.
 * Vestibulum auctor dapibus neque.
-
