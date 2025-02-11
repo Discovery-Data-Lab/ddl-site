@@ -1,12 +1,20 @@
-+++
-title = "Uma Biblioteca Livre de Detecçao de Comunidades"
-date = "2025-02-10T11:00:00+02:00"
-tags = ["mineração de dados", "redes complexas", "ciências de dados"]
-categories = ["dados", "redes"]
-description = "Este trabalho tem como objetivo investigar formulações de otimização multiobjetivo para detecção de comunidades utilizando algoritmos evolutivos multiobjetivos para encontrar soluções eficientes."
-banner = "img/banners/community detection.png"
-authors = ["Guilherme Oliveira"]
-+++
+---
+title: Uma Biblioteca Open source para Detecçao de Comunidades
+date: 2025-02-10T11:00:00+02:00
+tags:
+  - mineração de dados
+  - redes complexas
+  - ciências de dados
+categories:
+  - dados
+  - redes
+description: Este trabalho tem como objetivo investigar formulações de
+  otimização multiobjetivo para detecção de comunidades utilizando algoritmos
+  evolutivos multiobjetivos para encontrar soluções eficientes.
+banner: img/banners/community detection.png
+authors:
+  - Guilherme Oliveira
+---
 
 
 # Disponibilidade
@@ -50,58 +58,57 @@ Nesta representação, cada entrada corresponde a um par `node:id`, indicando a 
 ![](/img/banners/exampleremocd.png)
 
 
+#  Modelo Matematico
 
-
-#  Otimizaçao
-
-
-O objetivo principal de construir este algoritmo é superar o algoritmo[^shi] em termos de velocidade. O tratamento eficiente de grandes grafos é crucial para muitas aplicações, tornando isso um marco importante para o sucesso.
-
-Abaixo estão algumas comparações de desempenho:
-
-- O algoritmo original não fornece o tempo de execução exato para cada conjunto de dados, apenas o tempo médio por arquivo. Usando a mesma abordagem, o tempo médio de execução do algoritmo proposto em todos os arquivos é de 5,92 segundos, em comparação com 223 segundos. Isso demonstra que o algoritmo proposto é aproximadamente **37,7 vezes mais rápido**.
-
-## Função Objetivo
-
-A parte mais cara do algoritmo em termos computacionais é a função objetivo, que corresponde à Equação (3.4)[^shi]:
+Ao otimizar partições de grafos (ou detecção de comunidade), um objetivo comum é medir o quão "boa" é uma determinada partição. Em nossa implementação, calculamos duas métricas: uma que soma a comunidade interna ("**intra**") (ajustado para contagem dupla) e outra que usa os graus de nós pré-calculados para criar uma medida normalizada de conectividade entre uma comunidade e outras ("**inter**"), dada pela equaçao abaixo.
 
 $$
 Q(C) = \sum_{c \in C} \left[ \frac{|E(c)|}{m} - \left( \frac{\sum_{v \in c} \text{deg}(v)}{2m} \right)^2 \right],
 $$
 
-onde $(|E(c)|)$ é o número de arestas dentro da comunidade $\(c\), \(m\)$ é o número total de arestas, $\(\text{deg}(v)\)$ é o grau do nó $\(v\)$, e $\(C\)$ é o conjunto de comunidades. Os dois termos refletem a densidade intra-comunidade e a conectividade inter-comunidade.
+Juntos, esses termos são combinados para produzir uma medida semelhante à modularidade (fixada entre –1 e 1). Mas o que isso significa em termos de desempenho? Vamos mergulhar nos detalhes.
 
-Na nossa implementação, a complexidade de computação correspondente pode ser detalhada da seguinte forma:
+## Reorganizando a Partição em Comunidades
 
-1. A construção da partição em comunidades envolve iterar por todos os nós e inseri-los em um `HashMap`. Essa operação tem uma complexidade $\(O(V)\)$, onde $\(V\)$ é o número de nós.
-2. Para cada comunidade:
-   - Iterar por todos os nós da comunidade.
-   - Para cada nó, recuperar seu grau pré-computado $(\(O(1)\))$ e iterar sobre seus vizinhos. Para cada vizinho, uma busca binária verifica a associação na comunidade $O(\log |C|)$, onde $\|C|\$ é o tamanho da comunidade).
-   - Como os graus do grafo são pré-computados uma vez, a complexidade para processar uma única comunidade é aproximadamente:
+A primeira fase da nossa função reorganiza a partição—um mapeamento de cada nó para sua comunidade atribuída—em um `hashmap` que agrupa todos os nós por sua comunidade. Essa reorganização é direta: iteramos sobre cada nó na partição e adicionamos seu ID ao vetor correspondente.  
+- **Tempo:** Como processamos cada nó uma vez, esta etapa é $O(n)$, onde $n$ é o número de nós.
+- **Espaço:** Um espaço extra de $O(n)$ é usado para armazenar esses grupos de comunidades.
 
-$$
-O(|C| \cdot \log |C|),
-$$
+### Processando Cada Comunidade
 
-removendo a dependência do grau $d$.
+Para cada comunidade, o algoritmo computa duas somas:
+1. **Arestas da Comunidade:**  
+   Para cada nó em uma comunidade, iteramos sobre seus vizinhos. O detalhe importante aqui é que precisamos contar apenas as arestas cujos dois extremos pertencem à mesma comunidade. Para isso, realizamos uma **busca binária** no vetor de nós da comunidade.  
+   - Se um nó tem $d$ vizinhos e a comunidade tem $n₍c₎$ nós, cada busca binária custa $O(log n₍c₎)$.  
+   - Assim, para um nó, o custo é $O(d · log n₍c₎)$, e somando para todos os nós, o tempo total no pior caso será:
+  
+     $
+     O(m \cdot \log n)
+     $
+     onde $m$ é o número total de arestas no grafo.
 
-3. A agregação dos resultados para $k$ comunidades resulta em:
+2. **Grau da Comunidade e Medida Normalizada:**  
+   Também recuperamos um grau precomputado para cada nó (de um `hashmap`, com custo médio $O(1)$ e atualizamos uma soma. Essa parte adiciona apenas uma sobrecarga constante por vizinho.
 
-$$
-O(k \cdot |C| \cdot \log |C|) = O(V \cdot \log (V / k)).
-$$
+O tempo total para essa etapa é, portanto, dominado pela busca binária dentro da iteração dos vizinhos, resultando em um tempo de execução no pior caso de $O(m · log n)$.
 
-A paralelização foi realizada utilizando o `par_iter()` da biblioteca Rayon, que distribui a carga de trabalho do processamento das comunidades por múltiplos threads. Isso reduz a carga de trabalho efetiva por thread por um fator $p$, onde $p$ é o número de threads. A complexidade resultante por thread é:
+### Cálculo Final da Métrica
 
-$$
-O\left(\frac{V \cdot \log (V / k)}{p}\right).
-$$
+Depois que todas as comunidades são processadas (seja sequencialmente ou usando iteradores paralelos para melhorar o tempo de execução), a função calcula as métricas finais:
+- **Intra:** Calculado como 1.0 menos a razão entre a soma das arestas intra‑comunidade e o número total de arestas.
+- **Modularidade:** Computado como 1.0 menos a soma dos termos intra e inter, depois limitado ao intervalo [-1, 1].  
 
-Isso reduz significativamente o tempo de computação para grafos grandes. Abaixo, $N$ representa a complexidade de tempo resultante do algoritmo, e $E$ do algoritmo original:
+Essa etapa envolve apenas algumas operações aritméticas, tornando-a essencialmente $O(1)$ em relação ao tamanho do grafo.
 
-$$
-N = O\left( \frac{G \cdot P^2 \cdot \left( V \cdot \log \left( \frac{V}{k} \right) \right)}{p} \right) \quad \text{e} \quad E = O(gs^2(m + n)).
-$$
+### Complexidade Total
+
+A complexidade total é a soma dos custos de construção das comunidades $O(n)$ e do processamento dos vizinhos $O(m · log n)$. Assim, a complexidade geral no pior caso é:
+
+$
+O(n + m \cdot \log n)
+$
+
+Isso significa que, embora o algoritmo escale linearmente com o número de nós, o número de arestas (o fator mais pesado neste tipo de problema) é multiplicado por um fator logarítmico e continua eficiente para grafos esparsos.
 
 # Operadores Geneticos
 
@@ -147,8 +154,6 @@ Os principais problemas incluem:
    - Após construir o mapa de frequência das comunidades dos vizinhos de um nó, a função seleciona a comunidade mais frequente.
    - Os nós para mutação são selecionados com base em uma taxa de mutação controlada (0,3), diferente da proposta de 0,6.
 
-
-### Results and Advantages
 
 
 ## Referencias
