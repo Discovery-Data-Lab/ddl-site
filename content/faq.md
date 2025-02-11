@@ -7,34 +7,24 @@ keywords:
   - perguntas
   - o que fazer
 ---
-## 1. O QUE FAZER SE EU AINDA NÃO RECEBI A RESPOSTA DA PESQUISA?
+## **1. Qual é o foco principal do laboratório? 🔍**  
+Aqui no lab, a gente foca em pesquisas que envolvem:  
+- Inteligência Computacional  
+- Mineração de Dados  
+- Inteligência Artificial  
+- Análise de Grandes Volumes de Dados  
+- Algoritmos de Machine Learning & Deep Learning  
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+Nosso objetivo é desenvolver soluções que podem ser aplicadas em várias áreas, como saúde, finanças, marketing e segurança da informação.  
 
-* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-* Aliquam tincidunt mauris eu risus.
-* Vestibulum auctor dapibus neque.
+## **2. Quais projetos de pesquisa estão em andamento ou já foram concluídos? 📊**  
+Temos vários projetos rolando, desde a criação de modelos preditivos e sistemas de recomendação até o desenvolvimento de novos algoritmos para aprendizado supervisionado e não supervisionado. Alguns dos nossos projetos já foram publicados em artigos científicos e apresentados em conferências.  
 
-## 2. QUAIS SÃO AS ÁREAS DE PESQUISA DO LABORATÓRIO?
+## **3. Quais metodologias, técnicas e ferramentas são utilizadas nas pesquisas? 🛠️**  
+A gente trabalha com [várias técnicas e ferramentas](https://github.com/Discovery-Data-Lab), incluindo estatística, machine learning, redes neurais e deep learning. No lado técnico, usamos linguagens e frameworks como C, Rust, Python, scikit-learn, TensorFlow e PyTorch.  
 
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+## **4. Como posso me envolver ou colaborar com o laboratório? 🤝**  
+Temos várias formas de participação! Dá para entrar como bolsista ou voluntário, dependendo das oportunidades disponíveis. Você pode participar por meio de programas de iniciação científica, parcerias acadêmicas ou até colaborações com a indústria. Quer saber mais? Dá uma olhada na aba de contato ou nos editais abertos!  
 
-## 3. O LABORATÓRIO REALIZA PARCERIAS INTERNACIONAIS?
-
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-
-## 4. POR QUE O LABORATÓRIO SE DESTACA?
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
-
-* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-* Aliquam tincidunt mauris eu risus.
-* Vestibulum auctor dapibus neque.
-
-## 5. OUTRA PERGUNTA IMPORTANTE
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
-
-* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-* Aliquam tincidunt mauris eu risus.
-* Vestibulum auctor dapibus neque.
+## **5. Estou apenas no primeiro período ou no começo do curso. Posso participar? 🚀**  
+Com certeza! Se você está começando agora, pode entrar como **voluntário** até surgir uma oportunidade com bolsa. O importante é estar disposto a aprender e colaborar. Quanto antes começar, melhor!  
